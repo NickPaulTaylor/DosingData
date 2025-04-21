@@ -1,0 +1,26 @@
+ Require the RSS plugin (which includes date filters)
+const eleventyPluginRss = require("@11ty/eleventy-plugin-rss");
+
+module.exports = function(eleventyConfig) {
+
+  // --- Passthrough Copies ---
+  eleventyConfig.addPassthroughCopy("admin");
+  eleventyConfig.addPassthroughCopy("src/assets"); // For images, CSS etc
+
+  // --- Plugins ---
+  // Use the RSS plugin (replace the old date plugin line)
+  eleventyConfig.addPlugin(eleventyPluginRss);
+
+  // --- Collections ---
+  eleventyConfig.addCollection("posts", function(collectionApi) {
+    // Get all markdown files in src/posts
+    // Sort them by date in descending order (newest first)
+    return collectionApi.getFilteredByGlob("src/posts/**/*.md")
+      .sort((a, b) => {
+        return b.date - a.date;
+      });
+  });
+
+  // --- Return Config ---
+  return {
+    dir: {

@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-plugin-rss": "^2.0.3",
+    "luxon": "^3.6.1"
   },
   "dependencies": {
     "a-sync-waterfall": "^1.0.1",
@@ -94,7 +96,6 @@
     "liquidjs": "^10.21.0",
     "list-to-array": "^1.1.0",
     "lru-cache": "^10.4.3",
-    "luxon": "^3.6.1",
     "markdown-it": "^14.1.0",
     "maximatch": "^0.1.0",
     "mdurl": "^2.0.0",

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dosing Data - Home</title> {# Updated Title #}
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <link rel="stylesheet" href="/assets/css/style.css"> {# Optional CSS #}
+</head>
+<body>
+
+  <h1>Welcome to Dosing Data!</h1>
+
+  <h2>Latest Posts</h2>
+  {%- if collections.posts and collections.posts.length > 0 -%}
+    <ul>
+      {# Loop through posts collection (sorted newest first) #}
+      {%- for post in collections.posts -%}
+        <li>
+          {# Link to the generated post page URL #}
+          <a href="{{ post.url | url }}">
+            {# Access title from front matter data #}
+            {{ post.data.title }}
+          </a>
+          - <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <p>No posts yet!</p>
+  {%- endif -%}
+
+</body>
+</html>
