@@ -1,0 +1,23 @@
+# Backend configuration - tells Decap how to connect to your Git repo
+backend:
+  name: git-gateway # Use Netlify's Git Gateway service we enabled
+  branch: main # The branch to work with in GitHub (use 'master' if that's your main branch)
+
+# Media files configuration - where images/uploads go
+media_folder: "src/assets/images/uploads" # Path where uploaded files are stored in the repo
+public_folder: "/assets/images/uploads" # Public path used in generated content (e.g., in Markdown image tags)
+
+# Collections - Define your content types here
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog Posts" # Used in the CMS UI
+    folder: "src/posts" # Where to store the Markdown files for posts IN YOUR REPO
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template for new posts
+    fields: # The fields for each document (mostly corresponds to front matter)
+      - { label: "Layout", name: "layout", widget: "hidden", default: "post.njk" } # Optional: assumes you'll have a layout file named 'post.njk' later
+      - { label: "Title", name: "title", widget: "string" } # Simple text input
+      - { label: "Publish Date", name: "date", widget: "datetime" } # Date picker
+      - { label: "Tags", name: "tags", widget: "list", required: false } # Optional list of tags
+      - { label: "Featured Image", name: "featuredImage", widget: "image", required: false } # Optional image upload
+      - { label: "Body", name: "body", widget: "markdown" } # Main content area (Markdown editor)

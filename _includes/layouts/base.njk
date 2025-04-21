@@ -1,0 +1,25 @@
+{# File: _includes/layouts/base.njk #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dosing Data</title> {# You can make this fancier later #}
+    <link rel="stylesheet" href="/css/style.css"> {# Link to our future stylesheet #}
+</head>
+<body>
+    <header>
+        <h1>Dosing Data</h1>
+        {# Add navigation links here later if you want #}
+    </header>
+
+    <main>
+        {# This is the magic part where page-specific content will go! #}
+        {{ content | safe }}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Dosing Data</p> {# Update the year as needed #}
+    </footer>
+</body>
+</html>
