@@ -9,8 +9,8 @@
     <h1>Latest Posts</h1>
 
     <div class="post-list">
-        {# Loop through posts (Eleventy provides collections.post) #}
-        {%- for post in collections.post | reverse -%}
+        {# Loop through posts (Eleventy provides collections.posts) #}
+        {%- for post in collections.posts | reverse -%}
             <article class="post-preview">
                 {# Add a link to the post #}
                 <a href="{{ post.url | url }}" class="post-preview__link">
