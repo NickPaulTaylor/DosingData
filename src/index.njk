@@ -6,31 +6,31 @@
 
 {% block content %}
 <div class="container">
-    <h1>Latest Posts</h1>
+  <h1>Latest Posts</h1>
 
-    <div class="post-list">
-        {# Loop through posts (Eleventy provides collections.posts) #}
-        {%- for post in collections.posts | reverse -%}
-            <article class="post-preview">
-                {# Add a link to the post #}
-                <a href="{{ post.url | url }}" class="post-preview__link">
-                    {% if post.data.featuredImage %}
-                    <div class="post-preview__image-container">
-                         {# Assume 'featuredImage' is in post's front matter #}
-                        <img src="{{ post.data.featuredImage | url }}" alt="{{ post.data.imageAlt or '' }}" class="post-preview__image">
-                    </div>
-                    {% endif %}
-                    <div class="post-preview__content">
-                        <h2 class="post-preview__title">{{ post.data.title }}</h2>
-                        {# Add excerpt or other meta data if available #}
-                        {% if post.data.excerpt %}
-                            <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
-                        {% endif %}
-                        <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time> {# Use your Luxon filters #}
-                    </div>
-                </a>
-            </article>
-        {%- endfor -%}
-    </div>
+  <div class="post-list">
+    {# Loop through posts (Eleventy provides collections.post) #}
+    {%- for post in collections.post | reverse -%}
+      <article class="post-preview">
+        {# Add a link to the post #}
+        <a href="{{ post.url | url }}" class="post-preview__link">
+          {% if post.data.featuredImage %}
+            <div class="post-preview__image-container">
+              {# Assume 'featuredImage' is in post's front matter #}
+              <img src="{{ post.data.featuredImage | url }}" alt="{{ post.data.imageAlt or '' }}" class="post-preview__image">
+            </div>
+          {% endif %}
+          <div class="post-preview__content">
+            <h2 class="post-preview__title">{{ post.data.title }}</h2>
+            {# Add excerpt or other meta data if available #}
+            {% if post.data.excerpt %}
+              <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
+            {% endif %}
+            <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time> {# Use your Luxon filters #}
+          </div>
+        </a>
+      </article>
+    {%- endfor -%}
+  </div>
 </div>
 {% endblock %}
