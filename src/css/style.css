@@ -78,7 +78,7 @@ img {
 }
 
 .logo img {
-    max-height: 40px; /* Adjust logo size as needed */
+    max-height: 100px; 
     width: auto;
 }
 
