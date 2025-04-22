@@ -48,9 +48,6 @@
   {% endif %}
   {# --- End Post Separation Logic --- #}
 
-{# Right after the 'remainingPosts' loop, before HERO SECTION #}
-{% log "DEBUG: sidePosts length is:", sidePosts.length %}
-
   {# --- HERO SECTION --- #}
   {# Only display hero section if there is a featured post and at least one side post #}
   {% if featuredPost and sidePosts.length > 0 %}
@@ -63,11 +60,14 @@
             {% include "partials/post-card.njk" with { post: sidePosts[1] } %}
           </div>
         {% endif %}
-        {% if sidePosts[3] %} 
-          <div class="hero-post hero-post-small">
-            {% include "partials/post-card.nkj" with { post: sidePosts[3] } %}
-          </div>
-        {% endif %}
+       {# Temporary Test for Lines 61-65 #}
+      {% set testPost = collections.post[0] %} {# Get the first post overall #}
+      {% if testPost %} {# Make sure at least one post exists #}
+        <div class="hero-post hero-post-small">
+          {# Intentionally including the *first* post here for testing #}
+          {% include "partials/post-card.njk" with { post: testPost } %}
+        </div>
+      {% endif %}
       </div>
 
       {# Center Featured Column #}
