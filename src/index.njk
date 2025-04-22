@@ -6,31 +6,107 @@
 
 {% block content %}
 <div class="container">
-  <h1>Latest Posts</h1>
 
-  <div class="post-list">
-    {# Loop through posts (Eleventy provides collections.post) #}
-    {%- for post in collections.post | reverse -%}
-      <article class="post-preview">
-        {# Add a link to the post #}
-        <a href="{{ post.url | url }}" class="post-preview__link">
-          {% if post.data.featuredImage %}
-            <div class="post-preview__image-container">
-              {# Assume 'featuredImage' is in post's front matter #}
-              <img src="{{ post.data.featuredImage | url }}" alt="{{ post.data.imageAlt or '' }}" class="post-preview__image">
-            </div>
-          {% endif %}
-          <div class="post-preview__content">
-            <h2 class="post-preview__title">{{ post.data.title }}</h2>
-            {# Add excerpt or other meta data if available #}
-            {% if post.data.excerpt %}
-              <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
-            {% endif %}
-            <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time> {# Use your Luxon filters #}
+  {# --- Post Separation Logic --- #}
+  {# Get all posts, newest first #}
+  {% set posts = collections.post | reverse %}
+
+  {# Find the featured post #}
+  {% set featuredPost = null %}
+  {% for post in posts %}
+    {% if post.data.featured %}
+      {% set featuredPost = post %}
+    {% endif %}
+  {% endfor %}
+
+  {# Get the 4 latest non-featured posts for the sides #}
+  {% set sidePosts = [] %}
+  {% if featuredPost %} {# Only look for side posts if a featured post exists #}
+    {% for post in posts %}
+      {% if sidePosts.length < 4 and post.url != featuredPost.url %}
+        {% set sidePosts = (sidePosts.push(post), sidePosts) %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {# Get all remaining posts (excluding hero posts) #}
+  {% set remainingPosts = [] %}
+  {% set heroUrls = [] %}
+  {% if featuredPost %}
+      {% set heroUrls = (heroUrls.push(featuredPost.url), heroUrls) %}
+      {% for post in sidePosts %}
+        {% set heroUrls = (heroUrls.push(post.url), heroUrls) %}
+      {% endfor %}
+      {% for post in posts %}
+        {% if post.url not in heroUrls %}
+          {% set remainingPosts = (remainingPosts.push(post), remainingPosts) %}
+        {% endif %}
+      {% endfor %}
+  {% else %}
+      {# If no featured post, all posts are 'remaining' #}
+      {% set remainingPosts = posts %}
+  {% endif %}
+  {# --- End Post Separation Logic --- #}
+
+
+  {# --- HERO SECTION --- #}
+  {# Only display hero section if there is a featured post and at least one side post #}
+  {% if featuredPost and sidePosts.length > 0 %}
+    <div class="hero-section">
+
+      {# Left Stack Column #}
+      <div class="hero-stack hero-stack-left">
+        {% if sidePosts[1] %} {# 2nd newest side post #}
+          <div class="hero-post hero-post-small">
+            {% include "partials/post-card.njk" with { post: sidePosts[1] } %}
           </div>
-        </a>
-      </article>
+        {% endif %}
+        {% if sidePosts[3] %} {# 4th newest side post #}
+          <div class="hero-post hero-post-small">
+            {% include "partials/post-card.njk" with { post: sidePosts[3] } %}
+          </div>
+        {% endif %}
+      </div>
+
+      {# Center Featured Column #}
+      <div class="hero-post hero-post-featured">
+         {% include "partials/post-card.njk" with { post: featuredPost } %}
+      </div>
+
+      {# Right Stack Column #}
+      <div class="hero-stack hero-stack-right">
+        {% if sidePosts[0] %} {# 1st newest side post #}
+          <div class="hero-post hero-post-small">
+            {% include "partials/post-card.njk" with { post: sidePosts[0] } %}
+          </div>
+        {% endif %}
+        {% if sidePosts[2] %} {# 3rd newest side post #}
+          <div class="hero-post hero-post-small">
+            {% include "partials/post-card.njk" with { post: sidePosts[2] } %}
+          </div>
+        {% endif %}
+      </div>
+
+    </div> {# End hero-section #}
+
+    {# --- SEPARATOR LINE --- #}
+    <hr class="hero-separator">
+
+  {% endif %} {# End check for featuredPost and sidePosts #}
+
+
+  {# --- REMAINING POSTS GRID --- #}
+  {# Use post-grid class for consistency with suggested CSS #}
+  <div class="post-grid">
+    {# Loop through the remaining posts #}
+    {%- for post in remainingPosts -%}
+       {# Use the same partial for consistency #}
+       {% include "partials/post-card.njk" with { post: post } %}
+    {%- else -%}
+      {# Optional: Message if there are no posts at all (after filtering hero) #}
+      <p>No posts found.</p>
     {%- endfor -%}
-  </div>
-</div>
+  </div> {# End post-grid #}
+
+</div> {# End container #}
 {% endblock %}
