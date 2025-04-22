@@ -1,28 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {# Use the title from the post's front matter for the page title #}
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="/assets/css/style.css"> {# Optional: Link to a CSS file later #}
-</head>
-<body>
-    <header>
-        {# Maybe add site title or nav later #}
-    </header>
-    <main>
-        <article>
-            <h1>{{ title }}</h1>
-            {# Format the date using filters we'll add via a plugin #}
-            <p>Published on: <time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></p>
-            <hr>
-            {# This renders the main Markdown content from the post #}
-            {{ content | safe }}
-        </article>
-    </main>
-    <footer>
-        <p><a href="/">Back Home</a></p>
-    </footer>
-</body>
-</html>
+{# src/_includes/post.njk #}
+{% extends "base.njk" %}
+
+{% block content %}
+<article class="container post-content">
+    <h1>{{ title }}</h1>
+    <div class="post-meta">
+        <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
+        {# Add author etc. if available in front matter: - By {{ author }} #}
+    </div>
+
+    {# The actual post content, processed from Markdown #}
+    {{ content | safe }}
+
+</article>
+{% endblock %}

@@ -1,34 +1,36 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dosing Data - Home</title> {# Updated Title #}
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <link rel="stylesheet" href="/assets/css/style.css"> {# Optional CSS #}
-</head>
-<body>
+{# src/index.njk #}
+{% extends "base.njk" %} {# Assumes base layout is at _includes/base.njk #}
 
-  <h1>Welcome to Dosing Data!</h1>
+{# Set the title for this page #}
+{% set title = "Home" %}
 
-  <h2>Latest Posts</h2>
-  {%- if collections.posts and collections.posts.length > 0 -%}
-    <ul>
-      {# Loop through posts collection (sorted newest first) #}
-      {%- for post in collections.posts -%}
-        <li>
-          {# Link to the generated post page URL #}
-          <a href="{{ post.url | url }}">
-            {# Access title from front matter data #}
-            {{ post.data.title }}
-          </a>
-          - <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
-        </li>
-      {%- endfor -%}
-    </ul>
-  {%- else -%}
-    <p>No posts yet!</p>
-  {%- endif -%}
+{% block content %}
+<div class="container">
+    <h1>Latest Posts</h1>
 
-</body>
-</html>
+    <div class="post-list">
+        {# Loop through posts (Eleventy provides collections.post) #}
+        {%- for post in collections.post | reverse -%}
+            <article class="post-preview">
+                {# Add a link to the post #}
+                <a href="{{ post.url | url }}" class="post-preview__link">
+                    {% if post.data.featuredImage %}
+                    <div class="post-preview__image-container">
+                         {# Assume 'featuredImage' is in post's front matter #}
+                        <img src="{{ post.data.featuredImage | url }}" alt="{{ post.data.imageAlt or '' }}" class="post-preview__image">
+                    </div>
+                    {% endif %}
+                    <div class="post-preview__content">
+                        <h2 class="post-preview__title">{{ post.data.title }}</h2>
+                        {# Add excerpt or other meta data if available #}
+                        {% if post.data.excerpt %}
+                            <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
+                        {% endif %}
+                        <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time> {# Use your Luxon filters #}
+                    </div>
+                </a>
+            </article>
+        {%- endfor -%}
+    </div>
+</div>
+{% endblock %}

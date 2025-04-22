@@ -7,6 +7,10 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("admin");
   eleventyConfig.addPassthroughCopy("src/assets");
 
+   // Passthrough copy for CSS files (and potentially images, fonts)
+   eleventyConfig.addPassthroughCopy("src/css");
+   eleventyConfig.addPassthroughCopy("src/img"); 
+
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 21, 2025)
   eleventyConfig.addFilter("readableDate", (dateObj, format = "LLL dd, yyyy") => {
