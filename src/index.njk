@@ -14,137 +14,73 @@ permalink: / # Generates index.html at the root
 {# Define the content that goes into the 'content' block of base.njk #}
 {% block content %}
 
-  {# --- START: Calculate Hero Posts --- #}
-
-  {# Get all featured posts from the collection defined in .eleventy.js #}
+  {# --- START: Calculate Hero Posts (Keep this part) --- #}
   {% set featured = collections.featuredPosts %}
-
-  {# Find the single post marked as the center feature - Loop Method #}
-  {% set centerPost = null %} {# Initialize #}
+  {% set centerPost = null %}
   {% for post in featured %}
-    {# Check if the flag is boolean true (verified via debugging) #}
     {% if post.data.featured_center === true %}
         {% set centerPost = post %}
-        {# Nunjucks doesn't have 'break', loop continues but var gets set #}
     {% endif %}
   {% endfor %}
-
-  {# Get potential side posts: start with all featured posts #}
-  {% set potentialSidePosts = featured %}
-  {# If a center post was found, remove it from the potential side posts list #}
-  {% if centerPost %}
-    {# Uses rejectattr filter: keeps items where 'url' is NOT equal to centerPost's url #}
-    {% set potentialSidePosts = featured | rejectattr("url", "equalto", centerPost.url) %}
-  {% endif %}
-  {# Take only the first 4 remaining posts to be side posts (or however many are left) #}
-  {% set sidePosts = potentialSidePosts | slice(0, 4) %}
-
-  {# NOTE: The complex slicing for leftPosts and rightPosts is removed for this test #}
-
   {# --- END: Calculate Hero Posts --- #}
 
 
-  {# --- START SIMPLIFIED DEBUG & RENDER --- #}
-  {# This block replaces the previous hero rendering section for testing #}
+  {# --- START DEEP DEBUGGING OF FILTERING --- #}
+  <div style="border: 3px solid purple; padding: 10px; margin: 15px 0; font-family: monospace; background-color: #fdf;">
+      <h4 style="margin-top:0; color:purple;">DEEP DEBUG: Filtering Process</h4>
 
-  <div style="border: 2px dashed green; padding: 10px; margin: 15px 0; font-family: monospace; background-color: #efe;">
-      <h4 style="margin-top:0; color:green;">SIMPLIFIED DEBUG: sidePosts</h4>
-      <p><strong>sidePosts Count:</strong> {{ sidePosts | length }}</p>
-      <p><strong>Listing items directly from sidePosts:</strong></p>
+      <p><strong>Center Post Found:</strong> {% if centerPost %} YES (Title: {{ centerPost.data.title | default("T MISSING", true) }}) {% else %} NO {% endif %}</p>
+      <hr>
+
+      <p><strong>1. Initial 'featured' collection (Count: {{ featured | length }}):</strong></p>
+      <ul>
+      {% for p in featured %}
+          <li>{{ loop.index }}: {{ p.data.title | default("T MISSING", true) }} (URL: {{ p.url | default("U MISSING", true) }}) - Center: {{ p.data.featured_center }}</li>
+      {% else %}<li>EMPTY</li>{% endfor %}
+      </ul>
+      <hr>
+
+      {% set potentialSidePosts = featured %}
+      {% if centerPost %}
+          <p><strong>2. Applying rejectattr('url', 'equalto', '{{ centerPost.url }}')</strong></p>
+          {% set potentialSidePosts = featured | rejectattr("url", "equalto", centerPost.url) %}
+      {% else %}
+           <p><strong>2. No center post, potentialSidePosts = featured</strong></p>
+      {% endif %}
+
+      <p><strong>3. 'potentialSidePosts' AFTER rejectattr (Count: {{ potentialSidePosts | length }}):</strong></p>
+      <ul>
+      {% for p in potentialSidePosts %}
+           <li>{{ loop.index }}: {{ p.data.title | default("T MISSING", true) }} (URL: {{ p.url | default("U MISSING", true) }}) - Center: {{ p.data.featured_center }}</li>
+      {% else %}<li>EMPTY</li>{% endfor %}
+      </ul>
+      <hr>
+
+      {% set sidePosts = potentialSidePosts | slice(0, 4) %}
+      <p><strong>4. 'sidePosts' AFTER slice(0, 4) (Count: {{ sidePosts | length }}):</strong></p>
       <ul>
       {% for p in sidePosts %}
-          <li style="border-bottom: 1px dotted #ccc; margin-bottom: 5px; padding-bottom: 5px;">
-           <strong>{{ loop.index }}: {{ p.data.title | default("TITLE MISSING", true) }}</strong><br>
-           &nbsp;&nbsp;URL: {{ p.url | default("URL MISSING", true) }} <br>
-           &nbsp;&nbsp;featured_center: {{ p.data.featured_center }}
-          </li>
-      {% else %}
-          <li>EMPTY</li>
-      {% endfor %}
+          <li>{{ loop.index }}: {{ p.data.title | default("T MISSING", true) }} (URL: {{ p.url | default("U MISSING", true) }}) - Center: {{ p.data.featured_center }}</li>
+      {% else %}<li>EMPTY</li>{% endfor %}
       </ul>
+      <hr>
+
+       <p><strong>5. Attempting to loop over 'sidePosts' directly:</strong></p>
+       {% set loopDidRun = false %}
+       {% for p in sidePosts %}
+           <p style="color: blue;">Looping... item {{ loop.index }} title: {{ p.data.title | default("T MISSING", true) }}</p>
+           {% set loopDidRun = true %}
+       {% else %}
+           <p style="color: red; font-weight: bold;">Direct loop over 'sidePosts' executed {% raw %}{% else %}{% endraw %} block.</p>
+       {% endfor %}
+       {% if not loopDidRun and sidePosts.length > 0 %}
+            <p style="color: red; font-weight: bold;">Direct loop over 'sidePosts' DID NOT RUN, and did not execute else block!</p>
+       {% endif %}
+       {% if loopDidRun %}
+             <p style="color: green; font-weight: bold;">Direct loop over 'sidePosts' SUCCEEDED.</p>
+       {% endif %}
+
   </div>
-
-  <hr>
-  <p style="text-align:center; font-weight: bold;">--- Rendering Test Below ---</p>
-  <hr>
-
-  {# Simplified rendering structure for testing #}
-  <section style="border: 2px solid orange; padding: 10px;">
-      <h4 style="color: orange; margin-top:0;">Simplified Render Test</h4>
-
-      <div style="border: 1px solid #aaa; margin: 5px; padding: 5px;">
-          <p><strong>Center Post:</strong></p>
-          {% if centerPost %}
-              {{ cards.postCard(centerPost, 'large') }}
-          {% else %}
-              <p>No Center Post Found</p>
-          {% endif %}
-      </div>
-
-      <div style="border: 1px solid #aaa; margin: 5px; padding: 5px;">
-          <p><strong>Attempting to render {{ sidePosts | length }} side posts directly:</strong></p>
-          {% for p in sidePosts %}
-               <p style="color:blue; font-size: 0.8em;">Rendering side post: {{ p.data.title | default("TITLE MISSING", true) }}</p>
-              {{ cards.postCard(p, 'small') }}
-          {% else %}
-              <p>No side posts in loop.</p>
-          {% endfor %}
-      </div>
-
-  </section>
-   <hr class="hero-separator"> {# Keep the original separator #}
-  {# --- END SIMPLIFIED DEBUG & RENDER --- #}
-
-
-  {# --- START: Rest of the content (More Posts) --- #}
-  {# This section remains, but exclusion logic might be affected by sidePosts count #}
-  <h2>More Posts</h2>
-  <div class="post-grid"> {# Assumes you have styling for .post-grid #}
-
-    {# Build a list of URLs for posts already shown in the hero section #}
-    {# Use working Nunjucks list concatenation: list = list + [newItem] #}
-    {% set heroUrlsList = [] %}
-    {% if centerPost %} {# This depends on centerPost being found correctly now #}
-      {% set heroUrlsList = heroUrlsList + [centerPost.url] %}
-    {% endif %}
-    {# Add URLs from the *actual* side posts that were selected #}
-    {% for post in sidePosts %} {# This uses the potentially incorrect sidePosts list #}
-      {% set heroUrlsList = heroUrlsList + [post.url] %}
-    {% endfor %}
-
-    {# Loop through ALL posts sorted by date (from collections.posts) #}
-    {% for post in collections.posts %}
-      {# Check if the current post's URL is NOT in the list of hero post URLs #}
-      {% if post.url not in heroUrlsList %}
-
-        {# Render the standard post preview for non-hero posts #}
-        <article class="post-preview">
-           {# Use the 'url' filter for robust link generation #}
-           <a href="{{ post.url | url }}" class="post-preview__link">
-
-             {% if post.data.featuredImage %}
-             <div class="post-preview__image-container">
-               {# Use the 'url' filter for robust image path generation #}
-               <img src="{{ post.data.featuredImage | url }}" alt="" class="post-preview__image">
-             </div>
-             {% endif %}
-
-             <div class="post-preview__content">
-               <h3 class="post-preview__title">{{ post.data.title }}</h3>
-               {% if post.data.excerpt %}
-               <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
-               {% endif %}
-               {# Use date filters defined in .eleventy.js #}
-               <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time>
-             </div>
-
-           </a>
-         </article>
-
-      {% endif %} {# Closes 'if post.url not in heroUrlsList' #}
-    {% endfor %} {# Closes 'for post in collections.posts' #}
-
-  </div> {# End of post-grid #}
-  {# --- END: Rest of the content --- #}
+  {# --- END DEEP DEBUGGING OF FILTERING --- #}
 
 {% endblock %}
