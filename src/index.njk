@@ -45,6 +45,30 @@ permalink: / # Generates index.html at the root
 
   {# --- START: Render Hero Section --- #}
   {# Render the section only if there's content (a center post or at least one side post) #}
+  {# --- START INNER DEBUG --- #}
+<div style="border: 2px dashed blue; padding: 10px; margin: 15px 0; font-family: monospace; background-color: #eef;">
+    <h4 style="margin-top:0; color:blue;">INNER DEBUG: Post Array Contents</h4>
+    <p><strong>sidePosts Count:</strong> {{ sidePosts | length }}</p>
+    <details>
+        <summary>Show sidePosts details</summary>
+        <ul>{% for p in sidePosts %}<li>{{ loop.index }}: {{ p.data.title }} (URL: {{ p.url }})</li>{% else %}<li>EMPTY</li>{% endfor %}</ul>
+    </details>
+    <hr>
+    <p><strong>leftPosts Count:</strong> {{ leftPosts | length }}</p>
+    <details>
+        <summary>Show leftPosts details</summary>
+        <ul>{% for p in leftPosts %}<li>{{ loop.index }}: {{ p.data.title }} (URL: {{ p.url }})</li>{% else %}<li>EMPTY</li>{% endfor %}</ul>
+    </details>
+    <hr>
+    <p><strong>rightPosts Count:</strong> {{ rightPosts | length }}</p>
+    <details>
+        <summary>Show rightPosts details</summary>
+        <ul>{% for p in rightPosts %}<li>{{ loop.index }}: {{ p.data.title }} (URL: {{ p.url }})</li>{% else %}<li>EMPTY</li>{% endfor %}</ul>
+    </details>
+</div>
+{# --- END INNER DEBUG --- #}
+
+{# Now start rendering the hero section #}
   {% if centerPost or sidePosts.length > 0 %}
     <section class="hero-section">
 
