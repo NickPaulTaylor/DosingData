@@ -14,7 +14,7 @@ permalink: / # Generates index.html at the root
 {# Define the content that goes into the 'content' block of base.njk #}
 {% block content %}
 
-  {# --- START: Hero Section Logic (Using Loop Method for Center Post) --- #}
+  {# --- START: Calculate Hero Posts --- #}
 
   {# Get all featured posts from the collection defined in .eleventy.js #}
   {% set featured = collections.featuredPosts %}
@@ -36,82 +36,68 @@ permalink: / # Generates index.html at the root
     {# Uses rejectattr filter: keeps items where 'url' is NOT equal to centerPost's url #}
     {% set potentialSidePosts = featured | rejectattr("url", "equalto", centerPost.url) %}
   {% endif %}
-  {# Take only the first 4 remaining posts to be side posts #}
+  {# Take only the first 4 remaining posts to be side posts (or however many are left) #}
   {% set sidePosts = potentialSidePosts | slice(0, 4) %}
 
-  {# Split the final side posts into left (first 2) and right (next 2) groups #}
-  {% set leftPosts = sidePosts | slice(0, 2) %}
-  {% set rightPosts = sidePosts | slice(2, 4) %}
+  {# NOTE: The complex slicing for leftPosts and rightPosts is removed for this test #}
 
-  {# --- START: Render Hero Section --- #}
-  {# Render the section only if there's content (a center post or at least one side post) #}
-  {# --- START INNER DEBUG --- #}
-<div style="border: 2px dashed blue; padding: 10px; margin: 15px 0; font-family: monospace; background-color: #eef;">
-    <h4 style="margin-top:0; color:blue;">INNER DEBUG: Post Array Contents</h4>
-    <p><strong>sidePosts Count:</strong> {{ sidePosts | length }}</p>
-    <details>
-        <summary>Show sidePosts details</summary>
-        <ul>{% for p in sidePosts %}<li>{{ loop.index }}: {{ p.data.title }} (URL: {{ p.url }})</li>{% else %}<li>EMPTY</li>{% endfor %}</ul>
-    </details>
-    <hr>
-    <p><strong>leftPosts Count:</strong> {{ leftPosts | length }}</p>
-    <details>
-        <summary>Show leftPosts details</summary>
-        <ul>{% for p in leftPosts %}<li>{{ loop.index }}: {{ p.data.title }} (URL: {{ p.url }})</li>{% else %}<li>EMPTY</li>{% endfor %}</ul>
-    </details>
-    <hr>
-    <p><strong>rightPosts Count:</strong> {{ rightPosts | length }}</p>
-    <details>
-        <summary>Show rightPosts details</summary>
-        <ul>{% for p in rightPosts %}<li>{{ loop.index }}: {{ p.data.title }} (URL: {{ p.url }})</li>{% else %}<li>EMPTY</li>{% endfor %}</ul>
-    </details>
-</div>
-{# --- END INNER DEBUG --- #}
+  {# --- END: Calculate Hero Posts --- #}
 
-{# Now start rendering the hero section #}
-  {% if centerPost or sidePosts.length > 0 %}
-    <section class="hero-section">
 
-      {# Left Side Column #}
-      <div class="hero-side hero-left">
-        {% for post in leftPosts %}
-          {# Call the macro to render a small post card #}
-          {{ cards.postCard(post, 'small') }}
-        {% endfor %}
+  {# --- START SIMPLIFIED DEBUG & RENDER --- #}
+  {# This block replaces the previous hero rendering section for testing #}
+
+  <div style="border: 2px dashed green; padding: 10px; margin: 15px 0; font-family: monospace; background-color: #efe;">
+      <h4 style="margin-top:0; color:green;">SIMPLIFIED DEBUG: sidePosts</h4>
+      <p><strong>sidePosts Count:</strong> {{ sidePosts | length }}</p>
+      <p><strong>Listing items directly from sidePosts:</strong></p>
+      <ul>
+      {% for p in sidePosts %}
+          <li style="border-bottom: 1px dotted #ccc; margin-bottom: 5px; padding-bottom: 5px;">
+           <strong>{{ loop.index }}: {{ p.data.title | default("TITLE MISSING", true) }}</strong><br>
+           &nbsp;&nbsp;URL: {{ p.url | default("URL MISSING", true) }} <br>
+           &nbsp;&nbsp;featured_center: {{ p.data.featured_center }}
+          </li>
+      {% else %}
+          <li>EMPTY</li>
+      {% endfor %}
+      </ul>
+  </div>
+
+  <hr>
+  <p style="text-align:center; font-weight: bold;">--- Rendering Test Below ---</p>
+  <hr>
+
+  {# Simplified rendering structure for testing #}
+  <section style="border: 2px solid orange; padding: 10px;">
+      <h4 style="color: orange; margin-top:0;">Simplified Render Test</h4>
+
+      <div style="border: 1px solid #aaa; margin: 5px; padding: 5px;">
+          <p><strong>Center Post:</strong></p>
+          {% if centerPost %}
+              {{ cards.postCard(centerPost, 'large') }}
+          {% else %}
+              <p>No Center Post Found</p>
+          {% endif %}
       </div>
 
-      {# Center Column Wrapper (includes vertical line styling via CSS) #}
-      <div class="hero-center-wrapper">
-        {% if centerPost %}
-          {# Call the macro to render a large post card #}
-          {{ cards.postCard(centerPost, 'large') }}
-        {% elif leftPosts.length == 0 and rightPosts.length == 0 and featured.length > 0 %}
-           {# Optional Fallback: If NO specific center post was marked,
-               AND no side posts ended up being selected (e.g., only 1 featured total),
-               you could uncomment the next line to render the *first* featured post
-               as large in the center spot. Otherwise, the center stays empty. #}
-           {# {{ cards.postCard(featured[0], 'large') }} #}
-        {% endif %}
+      <div style="border: 1px solid #aaa; margin: 5px; padding: 5px;">
+          <p><strong>Attempting to render {{ sidePosts | length }} side posts directly:</strong></p>
+          {% for p in sidePosts %}
+               <p style="color:blue; font-size: 0.8em;">Rendering side post: {{ p.data.title | default("TITLE MISSING", true) }}</p>
+              {{ cards.postCard(p, 'small') }}
+          {% else %}
+              <p>No side posts in loop.</p>
+          {% endfor %}
       </div>
 
-      {# Right Side Column #}
-      <div class="hero-side hero-right">
-        {% for post in rightPosts %}
-          {# Call the macro to render a small post card #}
-          {{ cards.postCard(post, 'small') }}
-        {% endfor %}
-      </div>
-
-    </section> {# End of hero-section #}
-
-    {# Horizontal separator line below the hero section #}
-    <hr class="hero-separator">
-
-  {% endif %} {# End of condition to render hero section #}
-  {# --- END: Render Hero Section --- #}
+  </section>
+   <hr class="hero-separator"> {# Keep the original separator #}
+  {# --- END SIMPLIFIED DEBUG & RENDER --- #}
 
 
   {# --- START: Rest of the content (More Posts) --- #}
+  {# This section remains, but exclusion logic might be affected by sidePosts count #}
   <h2>More Posts</h2>
   <div class="post-grid"> {# Assumes you have styling for .post-grid #}
 
@@ -122,7 +108,7 @@ permalink: / # Generates index.html at the root
       {% set heroUrlsList = heroUrlsList + [centerPost.url] %}
     {% endif %}
     {# Add URLs from the *actual* side posts that were selected #}
-    {% for post in sidePosts %} {# This depends on sidePosts being populated correctly #}
+    {% for post in sidePosts %} {# This uses the potentially incorrect sidePosts list #}
       {% set heroUrlsList = heroUrlsList + [post.url] %}
     {% endfor %}
 
