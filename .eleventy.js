@@ -12,7 +12,7 @@ module.exports = function(eleventyConfig) {
 
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 23, 2025)
-  eleventyConfig.addFilter("readableDate", (dateObj, format = "LLL dd, yyyy") => {
+  eleventyConfig.addFilter("readableDate", (dateObj, format = "LLL dd,<x_bin_534>") => {
     // Input dateObj should be a JavaScript Date object from Eleventy
     // Use UTC zone to ensure consistency across builds
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat(format);
@@ -51,7 +51,8 @@ module.exports = function(eleventyConfig) {
 
       // Optional: Add warning for invalid dates during sort
       if (isNaN(dateA) || isNaN(dateB)) {
-           console.warn(`[DEBUG] Invalid date encountered during 'posts' sort: <span class="math-inline">\{a\.inputPath\} \(</span>{a.date}) or <span class="math-inline">\{b\.inputPath\} \(</span>{b.date})`);
+           // Corrected console.warn string interpolation
+           console.warn(`[DEBUG] Invalid date encountered during 'posts' sort: ${a.inputPath} (${a.date}) or ${b.inputPath} (${b.date})`);
            return 0; // Return 0 to avoid crashing sort on invalid date
        }
       return dateB - dateA; // Sort descending
@@ -84,7 +85,8 @@ module.exports = function(eleventyConfig) {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
         if (isNaN(dateA) || isNaN(dateB)) {
-             console.warn(`[DEBUG] Invalid date encountered during 'featuredPosts' sort: <span class="math-inline">\{a\.inputPath\} \(</span>{a.date}) or <span class="math-inline">\{b\.inputPath\} \(</span>{b.date})`);
+             // Corrected console.warn string interpolation
+             console.warn(`[DEBUG] Invalid date encountered during 'featuredPosts' sort: ${a.inputPath} (${a.date}) or ${b.inputPath} (${b.date})`);
              return 0;
          }
         return dateB - dateA; // Sort descending
@@ -119,4 +121,6 @@ module.exports = function(eleventyConfig) {
     // Specify template engines if needed (optional, defaults work well)
     // markdownTemplateEngine: "njk",
     // htmlTemplateEngine: "njk",
-    // dataTemplate
+    // dataTemplateEngine: "njk", // <-- This was the last line in your code
+  }; // <--- ADD THIS CLOSING BRACE for the 'return' object
+};   // <--- ADD THIS CLOSING BRACE and SEMICOLON for 'module.exports'
