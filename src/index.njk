@@ -14,6 +14,42 @@ permalink: / # Generates index.html at the root
 {# Define the content that goes into the 'content' block of base.njk #}
 {% block content %}
 
+{# --- START DEBUGGING BLOCK --- #}
+<div style="background-color: #f0f0f0; padding: 15px; border: 2px solid red; margin: 20px 0; font-family: monospace; font-size: 14px; color: #333;">
+  <h3 style="margin-top: 0; color: red;">DEBUG OUTPUT:</h3>
+  <hr>
+  <p><strong>Total featured posts received by template:</strong> {{ collections.featuredPosts | length }}</p>
+  <hr>
+  <p><strong>Attempting to find center post using selectattr('data.featured_center', 'equalto', true):</strong></p>
+  {% set _debug_centerCheck = collections.featuredPosts | selectattr("data.featured_center", "equalto", true) | first %}
+  {% if _debug_centerCheck %}
+    <p style="color: green; font-weight: bold;">&check; Center post FOUND:</p>
+    <ul>
+      <li>Title: {{ _debug_centerCheck.data.title }}</li>
+      <li>URL: {{ _debug_centerCheck.url | url }}</li>
+      <li>Value of 'featured_center': {{ _debug_centerCheck.data.featured_center }}</li>
+      <li>Is 'featured_center' === true (boolean)? <strong style="color: blue;">{{ _debug_centerCheck.data.featured_center === true }}</strong></li>
+    </ul>
+  {% else %}
+    <p style="color: red; font-weight: bold;">&times; Center post NOT FOUND using boolean 'true'!</p>
+  {% endif %}
+  <hr>
+  <p><strong>Listing all posts in 'collections.featuredPosts' and their flags:</strong></p>
+  <ul>
+  {% for p in collections.featuredPosts %}
+    <li style="margin-bottom: 5px; border-bottom: 1px dotted #ccc; padding-bottom: 5px;">
+      <strong>{{ p.data.title }}</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;featured: {{ p.data.featured }}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;featured_center: {{ p.data.featured_center }} <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;Is 'featured_center' === true (boolean)? <strong style="color: blue;">{{ p.data.featured_center === true }}</strong>
+    </li>
+  {% else %}
+     <li>No posts found in collections.featuredPosts.</li>
+  {% endfor %}
+  </ul>
+</div>
+{# --- END DEBUGGING BLOCK --- #}
+
   {# --- START: Hero Section Logic (Revised) --- #}
 
   {# Get all featured posts from the collection defined in .eleventy.js #}
