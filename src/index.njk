@@ -1,150 +1,113 @@
-{# src/index.njk #}
-{% extends "base.njk" %} {# Assumes base layout is at _includes/base.njk #}
+---
+title: Dosing Data # Or whatever your site title is
+layout: base.njk        # Tells Eleventy to use _includes/base.njk
+permalink: /            # Makes this file generate example.com/index.html
+---
 
-{# Set the title for this page #}
-{% set title = "Home" %}
+{# This extends the base layout. The content below goes into the 'content' block defined in base.njk #}
+{% extends "base.njk" %}
 
+{# Import your post card macro, path relative to _includes #}
+{% import "macros/post-card.njk" as cards %}
+
+{# Define the content that goes into the 'content' block of base.njk #}
 {% block content %}
-<div class="container">
 
-  {# ========================================================== #}
-  {# START: Inserted Logic from Step 2                        #}
-  {# ========================================================== #}
+  {# Optional: Display the page title from front matter #}
+  {# You might omit this H1 if the hero section serves as the main visual intro #}
+  {# <h1>{{ title }}</h1> #}
 
-  {# Fetch all posts, newest first #}
-  {% set posts = collections.post | reverse %} {# Assuming posts tagged 'post'. Adjust if needed. #}
+  {# --- Hero Section Logic (Paste the previously provided logic here) --- #}
+  {% set featured = collections.featuredPosts %}
 
-  {# Find the featured post #}
-  {% set featuredPost = null %}
-  {% for post in posts %}
-    {% if post.data.featured %}
-      {% set featuredPost = post %}
+  {# Find the central post #}
+  {% set centerPost = null %}
+  {% for post in featured %}
+    {% if post.data.featured_center %}
+      {% set centerPost = post %}
     {% endif %}
   {% endfor %}
 
-  {# Optional: If no post is specifically marked as featured, default to the latest? #}
-  {# {% if not featuredPost and posts | length > 0 %}
-    {% set featuredPost = posts[0] %}
-  {% endif %} #}
+  {# Get the side posts (excluding the center one) - take the first 4 available #}
+  {% set sidePosts = [] %}
+  {% for post in featured %}
+    {% if centerPost and post.url != centerPost.url and sidePosts.length < 4 %}
+       {% set sidePosts = (sidePosts.push(post), sidePosts) %}
+    {% elif not centerPost and sidePosts.length < 4 %} {# Handle case where no center post is explicitly set #}
+       {% set sidePosts = (sidePosts.push(post), sidePosts) %}
+    {% endif %}
+  {% endfor %}
 
-  {# Get posts for the hero section sides (excluding the featured one) #}
-  {% set heroSidePosts = [] %}
-  {% set postsForHeroSides = 4 %} {# We need 4 side posts #}
-  {% if featuredPost %} {# Only gather side posts if a featured one exists #}
-      {% for post in posts %}
-        {% if post.url != featuredPost.url and heroSidePosts | length < postsForHeroSides %}
-          {% set heroSidePosts = (heroSidePosts.push(post), heroSidePosts) %}
+  {# Split side posts into left and right pairs #}
+  {% set leftPosts = sidePosts | slice(0, 2) %}
+  {% set rightPosts = sidePosts | slice(2, 4) %}
+
+  {# Check if we have enough posts to render the hero section #}
+  {# Render if we have a center post OR at least 2 side posts #}
+  {% if centerPost or sidePosts.length >= 2 %}
+    <section class="hero-section">
+      <div class="hero-side hero-left">
+        {% for post in leftPosts %}
+          {{ cards.postCard(post, 'small') }} {# Pass 'small' size to macro #}
+        {% endfor %}
+      </div>
+      <div class="hero-center-wrapper"> {# Wrapper for potential line styling #}
+        {% if centerPost %}
+          {{ cards.postCard(centerPost, 'large') }} {# Pass 'large' size to macro #}
+        {% else %}
+          {# Optional: What to display if no center post is explicitly marked? #}
+          {# Maybe display nothing, or the first featured post large? #}
+          {# Example: Display first featured post if no specific center one #}
+          {# {% if featured.length > 0 %} #}
+          {#  {{ cards.postCard(featured[0], 'large') }} #}
+          {# {% endif %} #}
         {% endif %}
-      {% endfor %}
-  {% endif %}
-
-  {# Separate the posts for the hero section from the rest #}
-  {% set heroPostUrls = [] %}
-  {% if featuredPost %}
-      {# Add featured post URL #}
-      {% set heroPostUrls = (heroPostUrls.push(featuredPost.url), heroPostUrls) %}
-      {# Add side post URLs #}
-      {% for post in heroSidePosts %}
-        {% set heroPostUrls = (heroPostUrls.push(post.url), heroPostUrls) %}
-      {% endfor %}
-  {% endif %}
-
-  {# Get remaining posts by filtering out hero posts #}
-  {% set remainingPosts = [] %}
-  {% for post in posts %}
-    {% if post.url not in heroPostUrls %}
-      {% set remainingPosts = (remainingPosts.push(post), remainingPosts) %}
-    {% endif %}
-  {% endfor %}
-
-  {# ========================================================== #}
-  {# END: Inserted Logic from Step 2                          #}
-  {# ========================================================== #}
-
-
-  {# ========================================================== #}
-  {# START: Inserted Hero HTML Structure from Step 2          #}
-  {#         (Adapted to use your post-card.njk partial)      #}
-  {# ========================================================== #}
-
-  {# --- HERO SECTION --- #}
-  {# Only display hero section if we have a featured post and enough side posts #}
-  {% if featuredPost and heroSidePosts | length == 4 %}
-  <section class="hero-layout">
-    {# --- Left Side --- #}
-    <div class="hero-layout__left">
-      {# Display first 2 side posts #}
-      {% for post in heroSidePosts | slice(0, 2) %}
-        <article class="hero-post hero-post--small">
-          {# Use your partial here #}
-          {% include "partials/post-card.njk" with { post: post, isSmallHero: true } %} {# Pass optional flag if needed #}
-        </article>
-      {% endfor %}
-    </div>
-
-    {# --- Center --- #}
-    <div class="hero-layout__center">
-      {# Display the featured post #}
-      <article class="hero-post hero-post--large">
-        {# Use your partial here #}
-        {% include "partials/post-card.njk" with { post: featuredPost, isLargeHero: true } %} {# Pass optional flag if needed #}
-      </article>
-    </div>
-
-    {# --- Right Side --- #}
-    <div class="hero-layout__right">
-      {# Display next 2 side posts #}
-      {% for post in heroSidePosts | slice(2, 4) %}
-        <article class="hero-post hero-post--small">
-          {# Use your partial here #}
-          {% include "partials/post-card.njk" with { post: post, isSmallHero: true } %} {# Pass optional flag if needed #}
-        </article>
-      {% endfor %}
-    </div>
-  </section> {# End hero-layout #}
-
-  {# --- HORIZONTAL SEPARATOR --- #}
-  <hr class="hero-separator">
-
-  {% elif featuredPost %}
-    {# Fallback: What if you have a featured post but NOT 4 side posts? #}
-    {# Option 1: Display featured post prominently anyway, maybe above the grid #}
-    <section class="featured-single">
-       <article class="hero-post hero-post--large">
-          {% include "partials/post-card.njk" with { post: featuredPost, isLargeHero: true } %}
-       </article>
+      </div>
+      <div class="hero-side hero-right">
+        {% for post in rightPosts %}
+          {{ cards.postCard(post, 'small') }} {# Pass 'small' size to macro #}
+        {% endfor %}
+      </div>
     </section>
-    <hr class="hero-separator">
-    {# Option 2: Don't show hero section at all - the 'remaining posts' grid will just show below #}
-
-  {% endif %} {# End check for featuredPost #}
-
-  {# ========================================================== #}
-  {# END: Inserted Hero HTML Structure                        #}
-  {# ========================================================== #}
+    <hr class="hero-separator"> {# Horizontal separator line #}
+  {% endif %}
+  {# --- End Hero Section --- #}
 
 
-  {# ========================================================== #}
-  {# START: Remaining Posts Grid (Adapted from your code)     #}
-  {# ========================================================== #}
+  {# --- Rest of the content --- #}
+  <h2>More Posts</h2>
+  {# Example: Use the .post-grid class from your CSS for the rest #}
+  <div class="post-grid">
+    {# Loop through all posts, excluding those already shown in the hero #}
+    {% set heroUrls = [] %}
+    {% if centerPost %}{% set heroUrls = (heroUrls.push(centerPost.url), heroUrls) %}{% endif %}
+    {% for post in sidePosts %}{% set heroUrls = (heroUrls.push(post.url), heroUrls) %}{% endif %}
 
-  {# --- REMAINING POSTS GRID --- #}
-  <section class="post-grid"> {# Using <section> for better semantics than <div> #}
-    {# Loop through the remaining posts #}
-    {%- for post in remainingPosts -%}
-      {# Use the same partial for consistency. Assumes partial wraps in <article> or similar #}
-      {% include "partials/post-card.njk" with { post: post } %}
-    {%- else -%}
-      {# Optional: Message if there are no posts at all (after filtering hero) #}
-      {% if not featuredPost %} {# Only show 'No posts' if there wasn't even a featured one #}
-         <p>No posts found.</p>
-      {% endif %}
-    {%- endfor -%}
-  </section> {# End post-grid #}
+    {% for post in collections.posts %}
+       {% if post.url not in heroUrls %}
+         {# Use the SAME postCard macro for consistency, or a different preview style #}
+         {# Example using the same macro, maybe default size or a 'medium' size? #}
+         {# {{ cards.postCard(post) }} #}
 
-  {# ========================================================== #}
-  {# END: Remaining Posts Grid                              #}
-  {# ========================================================== #}
+         {# OR use your existing post-preview structure if different #}
+         <article class="post-preview">
+           <a href="{{ post.url }}" class="post-preview__link">
+             {% if post.data.featuredImage %}
+             <div class="post-preview__image-container">
+               <img src="{{ post.data.featuredImage }}" alt="" class="post-preview__image">
+             </div>
+             {% endif %}
+             <div class="post-preview__content">
+               <h3 class="post-preview__title">{{ post.data.title }}</h3>
+               {% if post.data.excerpt %}
+               <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
+               {% endif %}
+               <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time>
+             </div>
+           </a>
+         </article>
+       {% endif %}
+    {% endfor %}
+  </div>
 
-</div> {# End container #}
 {% endblock %}

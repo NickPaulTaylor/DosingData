@@ -20,6 +20,9 @@ collections:
       - { label: "Publish Date", name: "date", widget: "datetime" } # Date picker
       - { label: "Tags", name: "tags", widget: "list", required: false } # Optional list of tags
       - { label: "Featured Image", name: "featuredImage", widget: "image", required: false } # Optional image upload
+      # --- Added Excerpt Field ---
+      - { label: "Excerpt", name: "excerpt", widget: "text", required: false } # Short summary text for previews
+      # --- End Added Excerpt Field ---
       - { label: "Feature in Hero Section?", name: "featured", widget: "boolean", default: false, required: false }
       - { label: "Make this the Central Hero Post?", name: "featured_center", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown" } # Main content area (Markdown editor)

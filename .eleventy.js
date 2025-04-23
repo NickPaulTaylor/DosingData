@@ -11,14 +11,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/img");       // For site images (like logo)
 
   // --- Custom Filters ---
-  // Filter for readable date (e.g., Apr 22, 2025)
+  // Filter for readable date (e.g., Apr 23, 2025)
   eleventyConfig.addFilter("readableDate", (dateObj, format = "LLL dd, yyyy") => {
     // Input dateObj should be a JavaScript Date object from Eleventy
     // Use UTC zone to ensure consistency across builds
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat(format);
   });
 
-  // Filter for HTML date string (e.g., 2025-04-22) used in <time> tags
+  // Filter for HTML date string (e.g., 2025-04-23) used in <time> tags
   eleventyConfig.addFilter('htmlDateString', (dateObj) => {
     // Input dateObj should be a JavaScript Date object from Eleventy
     // Use UTC zone to ensure consistency
@@ -30,13 +30,13 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
   // --- Collections ---
-  // Defines the 'posts' collection
+  // Defines the 'posts' collection (all posts, sorted newest first)
   eleventyConfig.addCollection("posts", function(collectionApi) {
     // Get all markdown files from the src/posts directory and subdirectories
     const posts = collectionApi.getFilteredByGlob("src/posts/**/*.md");
 
     // --- Debugging: Log found files and their dates ---
-    console.log(`[DEBUG] Found ${posts.length} files in src/posts/ by glob.`);
+    console.log(`[DEBUG] Found ${posts.length} files in src/posts/ by glob for 'posts' collection.`);
     posts.forEach(p => {
         // Eleventy automatically provides 'date' based on front matter or filename
         console.log(`[DEBUG] -> File: ${p.inputPath}, Date from Eleventy: ${p.date}`);
@@ -51,7 +51,7 @@ module.exports = function(eleventyConfig) {
 
       // Optional: Add warning for invalid dates during sort
       if (isNaN(dateA) || isNaN(dateB)) {
-           console.warn(`[DEBUG] Invalid date encountered during sort: ${a.inputPath} (${a.date}) or ${b.inputPath} (${b.date})`);
+           console.warn(`[DEBUG] Invalid date encountered during 'posts' sort: <span class="math-inline">\{a\.inputPath\} \(</span>{a.date}) or <span class="math-inline">\{b\.inputPath\} \(</span>{b.date})`);
            return 0; // Return 0 to avoid crashing sort on invalid date
        }
       return dateB - dateA; // Sort descending
@@ -64,6 +64,41 @@ module.exports = function(eleventyConfig) {
     // Return the sorted array for use in templates as 'collections.posts'
     return sortedPosts;
   }); // End of addCollection("posts", ...)
+
+
+  // *** START: Added featuredPosts Collection ***
+  // Defines the 'featuredPosts' collection (posts marked 'featured: true', sorted newest first)
+  eleventyConfig.addCollection("featuredPosts", function(collectionApi) {
+    // Get all markdown files from the src/posts directory and subdirectories
+    // Filter for posts that have 'featured: true' in their front matter
+    const featured = collectionApi.getFilteredByGlob("src/posts/**/*.md")
+      .filter(item => item.data.featured === true);
+
+    // --- Debugging: Log found featured files ---
+    console.log(`[DEBUG] Found ${featured.length} files marked as featured for 'featuredPosts' collection.`);
+    // --- End Debugging ---
+
+    // Sort the featured posts by date in descending order (newest first)
+    // Using the same robust sorting logic as the 'posts' collection
+    const sortedFeatured = featured.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        if (isNaN(dateA) || isNaN(dateB)) {
+             console.warn(`[DEBUG] Invalid date encountered during 'featuredPosts' sort: <span class="math-inline">\{a\.inputPath\} \(</span>{a.date}) or <span class="math-inline">\{b\.inputPath\} \(</span>{b.date})`);
+             return 0;
+         }
+        return dateB - dateA; // Sort descending
+    });
+
+    // --- Debugging: Log final count after sorting ---
+    console.log(`[DEBUG] Collection 'featuredPosts' contains ${sortedFeatured.length} items after sort.`);
+    // --- End Debugging ---
+
+    // Return the sorted array for use in templates as 'collections.featuredPosts'
+    return sortedFeatured;
+  }); // End of addCollection("featuredPosts", ...)
+  // *** END: Added featuredPosts Collection ***
+
 
   // --- Plugin Configuration ---
   // Make sure the RSS plugin lines are removed or commented out if not used
@@ -84,6 +119,4 @@ module.exports = function(eleventyConfig) {
     // Specify template engines if needed (optional, defaults work well)
     // markdownTemplateEngine: "njk",
     // htmlTemplateEngine: "njk",
-    // dataTemplateEngine: "njk",
-  };
-}; // End of module.exports = function(...) - Ensure this closing brace and semicolon are present
+    // dataTemplate
