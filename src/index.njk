@@ -1,7 +1,7 @@
 ---
 title: Dosing Data # Or whatever your site title is
-layout: base.njk        # Tells Eleventy to use _includes/base.njk
-permalink: /            # Makes this file generate example.com/index.html
+layout: base.njk # Tells Eleventy to use _includes/base.njk
+permalink: / # Makes this file generate example.com/index.html
 ---
 
 {# This extends the base layout. The content below goes into the 'content' block defined in base.njk #}
@@ -17,7 +17,7 @@ permalink: /            # Makes this file generate example.com/index.html
   {# You might omit this H1 if the hero section serves as the main visual intro #}
   {# <h1>{{ title }}</h1> #}
 
-  {# --- Hero Section Logic (Paste the previously provided logic here) --- #}
+  {# --- Hero Section Logic --- #}
   {% set featured = collections.featuredPosts %}
 
   {# Find the central post #}
@@ -56,10 +56,9 @@ permalink: /            # Makes this file generate example.com/index.html
           {{ cards.postCard(centerPost, 'large') }} {# Pass 'large' size to macro #}
         {% else %}
           {# Optional: What to display if no center post is explicitly marked? #}
-          {# Maybe display nothing, or the first featured post large? #}
           {# Example: Display first featured post if no specific center one #}
           {# {% if featured.length > 0 %} #}
-          {#  {{ cards.postCard(featured[0], 'large') }} #}
+          {#   {{ cards.postCard(featured[0], 'large') }} #}
           {# {% endif %} #}
         {% endif %}
       </div>
@@ -78,17 +77,19 @@ permalink: /            # Makes this file generate example.com/index.html
   <h2>More Posts</h2>
   {# Example: Use the .post-grid class from your CSS for the rest #}
   <div class="post-grid">
-    {# Loop through all posts, excluding those already shown in the hero #}
-    {% set heroUrls = [] %}
-    {% if centerPost %}{% set heroUrls = (heroUrls.push(centerPost.url), heroUrls) %}{% endif %}
-    {% for post in sidePosts %}{% set heroUrls = (heroUrls.push(post.url), heroUrls) %}{% endif %}
+    {# Build list of hero URLs first #}
+    {% set heroUrlsList = [] %}
+    {% if centerPost %}
+      {% set heroUrlsList = (heroUrlsList.push(centerPost.url), heroUrlsList) %}
+    {% endif %}
+    {% for post in sidePosts %}
+      {% set heroUrlsList = (heroUrlsList.push(post.url), heroUrlsList) %}
+    {% endfor %}
 
+    {# Now loop through all posts #}
     {% for post in collections.posts %}
-       {% if post.url not in heroUrls %}
-         {# Use the SAME postCard macro for consistency, or a different preview style #}
-         {# Example using the same macro, maybe default size or a 'medium' size? #}
-         {# {{ cards.postCard(post) }} #}
-
+       {# Check if the post URL is NOT in the list #}
+       {% if post.url not in heroUrlsList %}
          {# OR use your existing post-preview structure if different #}
          <article class="post-preview">
            <a href="{{ post.url }}" class="post-preview__link">
@@ -106,8 +107,8 @@ permalink: /            # Makes this file generate example.com/index.html
              </div>
            </a>
          </article>
-       {% endif %}
-    {% endfor %}
+       {% endif %} {# Closes 'if post.url not in heroUrlsList' #}
+    {% endfor %} {# Closes 'for post in collections.posts' #}
   </div>
 
 {% endblock %}
