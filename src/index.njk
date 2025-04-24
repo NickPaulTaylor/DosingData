@@ -17,7 +17,7 @@ permalink: / # Generates index.html at the root
   {# --- START: Calculate Hero Posts --- #}
 
   {# Get all featured posts from the collection #}
-  {% set featured = collections.featuredPosts %}
+  {% set featured = collections.featuredPosts %} {# Expect 5 items #}
 
   {# Find the center post using the reliable loop method #}
   {% set centerPost = null %}
@@ -27,37 +27,31 @@ permalink: / # Generates index.html at the root
     {% endif %}
   {% endfor %}
 
-  {# --- Calculate potentialSidePosts Manually (Replaces rejectattr) --- #}
-  {% set potentialSidePosts = [] %} {# Initialize empty array #}
+  {# --- Calculate Side Posts (Retry rejectattr + list) --- #}
+  {% set excludeUrl = "" %} {# Default if no centerPost #}
   {% if centerPost %}
-      {# Loop through original featured posts #}
-      {% for post in featured %}
-          {# Add post only if its URL doesn't match the center post's URL #}
-          {% if post.url != centerPost.url %}
-              {# Use working list concatenation #}
-              {% set potentialSidePosts = potentialSidePosts + [post] %}
-          {% endif %}
-      {% endfor %}
-  {% else %}
-      {# If no center post, all featured posts are potential sides #}
-      {% set potentialSidePosts = featured %}
+      {% set excludeUrl = centerPost.url %}
   {% endif %}
-  {# --- End Manual Calculation --- #}
 
-  {# Take the first 4 remaining posts to be side posts #}
-  {% set sidePosts = potentialSidePosts | slice(0, 4) %}
+  {# Filter the original 'featured' list, ensure result is a list #}
+  {# This should remove the item where url equals excludeUrl #}
+  {% set sidePosts = featured | rejectattr("url", "equalto", excludeUrl) | list %}
+  {# Expect 4 items if centerPost was found, else 5 #}
 
-  {# Split the final side posts into left (first 2) and right (next 2) groups #}
-  {% set leftPosts = sidePosts | slice(0, 2) %}
-  {% set rightPosts = sidePosts | slice(2, 4) %}
+  {# Slicing (Limit to 4, then split) #}
+  {% set sidePosts = sidePosts | slice(0, 4) %} {# Ensures max 4, handles edge case if rejectattr failed #}
+  {% set leftPosts = sidePosts | slice(0, 2) %}  {# Expect 2 items #}
+  {% set rightPosts = sidePosts | slice(2, 4) %} {# Expect 2 items #}
 
   {# --- END: Calculate Hero Posts --- #}
 
-{# --- START MINIMAL COUNT DEBUG --- #}
-<div style="border: 1px solid teal; background-color: #eff; padding: 5px; margin: 10px 0; font-family: monospace; color: teal;">
-   DEBUG COUNTS :: potential={{ potentialSidePosts | length }} | side={{ sidePosts | length }} | left={{ leftPosts | length }} | right={{ rightPosts | length }}
-</div>
-{# --- END MINIMAL COUNT DEBUG --- #}
+
+  {# --- START MINIMAL COUNT DEBUG (Keep for Verification) --- #}
+  <div style="border: 1px solid teal; background-color: #eff; padding: 5px; margin: 10px 0; font-family: monospace; color: teal;">
+     DEBUG COUNTS :: excludeUrl={{ excludeUrl }} | side={{ sidePosts | length }} | left={{ leftPosts | length }} | right={{ rightPosts | length }}
+  </div>
+  {# --- END MINIMAL COUNT DEBUG --- #}
+
 
   {# --- START: Render Hero Section (Original Grid Layout) --- #}
   {# Render the section only if there's content #}
@@ -67,7 +61,6 @@ permalink: / # Generates index.html at the root
       {# Left Side Column #}
       <div class="hero-side hero-left">
         {% for post in leftPosts %}
-          {# Call the macro to render a small post card #}
           {{ cards.postCard(post, 'small') }}
         {% endfor %}
       </div>
@@ -75,7 +68,6 @@ permalink: / # Generates index.html at the root
       {# Center Column Wrapper #}
       <div class="hero-center-wrapper">
         {% if centerPost %}
-          {# Call the macro to render a large post card #}
           {{ cards.postCard(centerPost, 'large') }}
         {% endif %}
       </div>
@@ -83,7 +75,6 @@ permalink: / # Generates index.html at the root
       {# Right Side Column #}
       <div class="hero-side hero-right">
         {% for post in rightPosts %}
-          {# Call the macro to render a small post card #}
           {{ cards.postCard(post, 'small') }}
         {% endfor %}
       </div>
@@ -108,6 +99,7 @@ permalink: / # Generates index.html at the root
     {% endif %}
     {# Use sidePosts which should now be correct #}
     {% for post in sidePosts %}
+       {# Check if concatenation works here - if not, this also fails #}
       {% set heroUrlsList = heroUrlsList + [post.url] %}
     {% endfor %}
 
