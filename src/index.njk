@@ -53,6 +53,11 @@ permalink: / # Generates index.html at the root
 
   {# --- END: Calculate Hero Posts --- #}
 
+{# --- START MINIMAL COUNT DEBUG --- #}
+<div style="border: 1px solid teal; background-color: #eff; padding: 5px; margin: 10px 0; font-family: monospace; color: teal;">
+   DEBUG COUNTS :: potential={{ potentialSidePosts | length }} | side={{ sidePosts | length }} | left={{ leftPosts | length }} | right={{ rightPosts | length }}
+</div>
+{# --- END MINIMAL COUNT DEBUG --- #}
 
   {# --- START: Render Hero Section (Original Grid Layout) --- #}
   {# Render the section only if there's content #}
