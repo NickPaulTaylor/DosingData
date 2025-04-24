@@ -1,15 +1,18 @@
-{% macro postCard(post, size='small') %}
-  {# Base CSS class plus size-specific class #}
+{# macros/post-card.njk #}
+{% macro postCard(post, size = "small") %}
   <article class="post-card post-card--{{ size }}">
-    {% if post.data.featuredImage %}
-      <img src="{{ post.data.featuredImage }}" alt="{{ post.data.title }}" class="post-card__image">
+    {# … image & title markup … #}
+
+    {% if post.data.excerpt %}
+      <p class="post-card__excerpt">
+        {% if size == "large" %}
+          {{ post.data.excerpt | truncate(300) }}
+        {% else %}
+          {{ post.data.excerpt | truncate(100) }}
+        {% endif %}
+      </p>
     {% endif %}
-    <div class="post-card__content">
-      <h2 class="post-card__title"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-      {% if post.data.excerpt %}
-        <p class="post-card__excerpt">{{ post.data.excerpt }}</p>
-      {% endif %}
-      <time datetime="{{ post.date | htmlDateString }}" class="post-card__date">{{ post.date | readableDate }}</time> {# Assumes Eleventy date filters #}
-    </div>
+
+    {# … date markup … #}
   </article>
 {% endmacro %}

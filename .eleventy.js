@@ -3,6 +3,19 @@ const { DateTime } = require("luxon");
 
 module.exports = function(eleventyConfig) {
 
+    /**
+   * Truncate a string to `length` characters, adding `omission` if clipped.
+   * @param  {string} str
+   * @param  {number} length
+   * @param  {string} omission
+   */
+    eleventyConfig.addFilter("truncate", function(str = "", length = 100, omission = "...") {
+      if (typeof str !== "string") return "";
+      if (str.length <= length) return str;
+      return str.slice(0, length).trim() + omission;
+    });
+  
+
   // --- Passthrough Copies ---
   // Copy directories/files directly to the output directory (_site)
   eleventyConfig.addPassthroughCopy("admin");         // For Decap CMS
