@@ -1,104 +1,89 @@
 {# --- Front Matter --- #}
 ---
-title: Dosing Data Blog # Or your actual site title
-layout: base.njk # Uses _includes/base.njk
-permalink: / # Generates index.html at the root
+title: Dosing Data Blog
+layout: base.njk
+permalink: /
 ---
 
-{# This extends the base layout. The content below goes into the 'content' block defined in base.njk #}
+{# Extend the base layout and import the postCard macro #}
 {% extends "base.njk" %}
-
-{# Import your post card macro, path relative to _includes #}
 {% import "macros/post-card.njk" as cards %}
 
-{# Define the content that goes into the 'content' block of base.njk #}
 {% block content %}
 
-  {# --- START: Radically Simplified Calculation --- #}
-  {% set allFeatured = collections.featuredPosts %}
-  {% set centerPost = null %}
-  {% set leftPosts = [] %}
-  {% set rightPosts = [] %}
-  {% set sideCounter = 0 %} {# Track how many side posts we've assigned #}
+  {# --- Hero Section Setup: Grab the pre-split heroPosts collection --- #}
+  {% set hero = collections.heroPosts %}
 
-  {# Single loop through the original collection #}
-  {% for post in allFeatured %}
-      {# Try to find center post #}
-      {% if post.data.featured_center === true %}
-          {% set centerPost = post %}
-      {# Else, if it's not the center post, assign to sides #}
-      {% elif sideCounter < 4 %} {# Limit to 4 side posts total #}
-          {% set sideCounter = sideCounter + 1 %}
-          {# Assign first 2 side posts found to left #}
-          {% if sideCounter <= 2 %}
-              {% set leftPosts = leftPosts + [post] %}
-          {# Assign next 2 side posts found to right #}
-          {% else %}
-              {% set rightPosts = rightPosts + [post] %}
-          {% endif %}
-      {% endif %}
-  {% endfor %}
-  {# --- END: Radically Simplified Calculation --- #}
+  {# --- Render Hero Section Only If We Have Any Featured Posts --- #}
+  {% if hero.center or hero.left | length > 0 or hero.right | length > 0 %}
+    <div class="container">
+      <section class="hero-section">
 
-
-  {# --- START MINIMAL COUNT DEBUG --- #}
-  <div style="border: 1px solid teal; background-color: #eff; padding: 5px; margin: 10px 0; font-family: monospace; color: teal;">
-     DEBUG COUNTS :: centerPost={{ centerPost.data.title | default("Not Found", true) }} | left={{ leftPosts | length }} | right={{ rightPosts | length }}
-  </div>
-  {# --- END MINIMAL COUNT DEBUG --- #}
-
-
-  {# --- START: Render Hero Section (Original Grid Layout) --- #}
-  {# Render the section only if there's content #}
-  {% if centerPost or leftPosts.length > 0 or rightPosts.length > 0 %}
-    <section class="hero-section">
       <div class="hero-side hero-left">
-        {% for p in leftPosts %}
+        {% for p in hero.left %}
           {{ cards.postCard(p, 'small') }}
         {% endfor %}
       </div>
+
       <div class="hero-center-wrapper">
-        {% if centerPost %}
-          {{ cards.postCard(centerPost, 'large') }}
+        {% if hero.center %}
+          {{ cards.postCard(hero.center, 'large') }}
         {% endif %}
       </div>
+
       <div class="hero-side hero-right">
-        {% for p in rightPosts %}
+        {% for p in hero.right %}
           {{ cards.postCard(p, 'small') }}
         {% endfor %}
       </div>
+
     </section>
     <hr class="hero-separator">
   {% endif %}
-  {# --- END: Render Hero Section --- #}
 
-
-  {# --- START: Rest of the content (More Posts) --- #}
+  {# --- More Posts Grid --- #}
   <h2>More Posts</h2>
   <div class="post-grid">
-    {# Build list of hero URLs #}
-    {% set heroUrlsList = [] %}
-    {% if centerPost %}{% set heroUrlsList = heroUrlsList + [centerPost.url] %}{% endif %}
-    {% for p in leftPosts %}{% set heroUrlsList = heroUrlsList + [p.url] %}{% endfor %}
-    {% for p in rightPosts %}{% set heroUrlsList = heroUrlsList + [p.url] %}{% endfor %}
 
-    {# Loop through ALL posts #}
+    {# Build a list of URLs that were in the hero so we can exclude them #}
+    {% set heroUrlsList = [] %}
+    {% if hero.center %}
+      {% set heroUrlsList = heroUrlsList + [hero.center.url] %}
+    {% endif %}
+    {% for p in hero.left %}
+      {% set heroUrlsList = heroUrlsList + [p.url] %}
+    {% endfor %}
+    {% for p in hero.right %}
+      {% set heroUrlsList = heroUrlsList + [p.url] %}
+    {% endfor %}
+
+    {# Loop through all posts, excluding any already displayed above #}
     {% for post in collections.posts %}
       {% if post.url not in heroUrlsList %}
-         {# Render post preview ... (same as before) ... #}
-         <article class="post-preview">
-           <a href="{{ post.url | url }}" class="post-preview__link">
-             {% if post.data.featuredImage %}<div class="post-preview__image-container"><img src="{{ post.data.featuredImage | url }}" alt="" class="post-preview__image"></div>{% endif %}
-             <div class="post-preview__content">
-               <h3 class="post-preview__title">{{ post.data.title }}</h3>
-               {% if post.data.excerpt %}<p class="post-preview__excerpt">{{ post.data.excerpt }}</p>{% endif %}
-               <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time>
-             </div>
-           </a>
-         </article>
+        <article class="post-preview">
+          <a href="{{ post.url | url }}" class="post-preview__link">
+
+            {% if post.data.featuredImage %}
+              <div class="post-preview__image-container">
+                <img src="{{ post.data.featuredImage | url }}" alt="" class="post-preview__image">
+              </div>
+            {% endif %}
+
+            <div class="post-preview__content">
+              <h3 class="post-preview__title">{{ post.data.title }}</h3>
+              {% if post.data.excerpt %}
+                <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
+              {% endif %}
+              <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">
+                {{ post.date | readableDate }}
+              </time>
+            </div>
+
+          </a>
+        </article>
       {% endif %}
     {% endfor %}
+
   </div>
-  {# --- END: Rest of the content --- #}
 
 {% endblock %}

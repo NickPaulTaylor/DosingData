@@ -12,7 +12,7 @@ module.exports = function(eleventyConfig) {
 
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 23, 2025)
-  eleventyConfig.addFilter("readableDate", (dateObj, format = "LLL dd,<x_bin_534>") => {
+  eleventyConfig.addFilter("readableDate", (dateObj, format = "LLL dd, yyyy") => {
     // Input dateObj should be a JavaScript Date object from Eleventy
     // Use UTC zone to ensure consistency across builds
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat(format);
@@ -32,95 +32,91 @@ module.exports = function(eleventyConfig) {
   // --- Collections ---
   // Defines the 'posts' collection (all posts, sorted newest first)
   eleventyConfig.addCollection("posts", function(collectionApi) {
-    // Get all markdown files from the src/posts directory and subdirectories
     const posts = collectionApi.getFilteredByGlob("src/posts/**/*.md");
 
     // --- Debugging: Log found files and their dates ---
     console.log(`[DEBUG] Found ${posts.length} files in src/posts/ by glob for 'posts' collection.`);
     posts.forEach(p => {
-        // Eleventy automatically provides 'date' based on front matter or filename
-        console.log(`[DEBUG] -> File: ${p.inputPath}, Date from Eleventy: ${p.date}`);
+      console.log(`[DEBUG] -> File: ${p.inputPath}, Date from Eleventy: ${p.date}`);
     });
     // --- End Debugging ---
 
-    // Sort the posts by date in descending order (newest first)
     const sortedPosts = posts.sort((a, b) => {
-      // Ensure dates are valid before comparing
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
-
-      // Optional: Add warning for invalid dates during sort
       if (isNaN(dateA) || isNaN(dateB)) {
-           // Corrected console.warn string interpolation
-           console.warn(`[DEBUG] Invalid date encountered during 'posts' sort: ${a.inputPath} (${a.date}) or ${b.inputPath} (${b.date})`);
-           return 0; // Return 0 to avoid crashing sort on invalid date
-       }
-      return dateB - dateA; // Sort descending
+        console.warn(`[DEBUG] Invalid date encountered during 'posts' sort: ${a.inputPath} (${a.date}) or ${b.inputPath} (${b.date})`);
+        return 0;
+      }
+      return dateB - dateA; // Newest first
     });
 
-    // --- Debugging: Log final count after sorting ---
     console.log(`[DEBUG] Collection 'posts' contains ${sortedPosts.length} items after sort.`);
-    // --- End Debugging ---
-
-    // Return the sorted array for use in templates as 'collections.posts'
     return sortedPosts;
-  }); // End of addCollection("posts", ...)
-
+  }); // End of addCollection("posts")
 
   // *** START: Added featuredPosts Collection ***
   // Defines the 'featuredPosts' collection (posts marked 'featured: true', sorted newest first)
   eleventyConfig.addCollection("featuredPosts", function(collectionApi) {
-    // Get all markdown files from the src/posts directory and subdirectories
-    // Filter for posts that have 'featured: true' in their front matter
     const featured = collectionApi.getFilteredByGlob("src/posts/**/*.md")
       .filter(item => item.data.featured === true);
 
-    // --- Debugging: Log found featured files ---
     console.log(`[DEBUG] Found ${featured.length} files marked as featured for 'featuredPosts' collection.`);
-    // --- End Debugging ---
 
-    // Sort the featured posts by date in descending order (newest first)
-    // Using the same robust sorting logic as the 'posts' collection
     const sortedFeatured = featured.sort((a, b) => {
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
-        if (isNaN(dateA) || isNaN(dateB)) {
-             // Corrected console.warn string interpolation
-             console.warn(`[DEBUG] Invalid date encountered during 'featuredPosts' sort: ${a.inputPath} (${a.date}) or ${b.inputPath} (${b.date})`);
-             return 0;
-         }
-        return dateB - dateA; // Sort descending
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      if (isNaN(dateA) || isNaN(dateB)) {
+        console.warn(`[DEBUG] Invalid date encountered during 'featuredPosts' sort: ${a.inputPath} (${a.date}) or ${b.inputPath} (${b.date})`);
+        return 0;
+      }
+      return dateB - dateA;
     });
 
-    // --- Debugging: Log final count after sorting ---
     console.log(`[DEBUG] Collection 'featuredPosts' contains ${sortedFeatured.length} items after sort.`);
-    // --- End Debugging ---
-
-    // Return the sorted array for use in templates as 'collections.featuredPosts'
     return sortedFeatured;
-  }); // End of addCollection("featuredPosts", ...)
+  }); // End of addCollection("featuredPosts")
   // *** END: Added featuredPosts Collection ***
 
+  // *** START: Added heroPosts Collection ***
+  // Defines the 'heroPosts' collection (splits featuredPosts into left, center, right)
+  eleventyConfig.addCollection("heroPosts", function(collectionApi) {
+    // Reuse the same glob and filter logic as featuredPosts
+    let featured = collectionApi.getFilteredByGlob("src/posts/**/*.md")
+      .filter(item => item.data.featured === true);
+
+    // Find and remove the center post marked 'featured_center: true'
+    let centerIndex = featured.findIndex(item => item.data.featured_center === true);
+    let centerPost = null;
+    if (centerIndex > -1) {
+      centerPost = featured.splice(centerIndex, 1)[0];
+    }
+
+    // Split remaining posts: first 2 = left, next 2 = right
+    let left = featured.slice(0, 2);
+    let right = featured.slice(2, 4);
+
+    return {
+      left,
+      center: centerPost,
+      right
+    };
+  }); // End of addCollection("heroPosts")
+  // *** END: Added heroPosts Collection ***
 
   // --- Plugin Configuration ---
-  // Make sure the RSS plugin lines are removed or commented out if not used
+  // (Uncomment and configure any plugins you need)
   // const eleventyPluginRss = require("@11ty/eleventy-plugin-rss");
   // eleventyConfig.addPlugin(eleventyPluginRss);
 
-
   // --- Return Base Configuration ---
-  // Define input and output directories
   return {
     dir: {
-      input: "src",       // Source directory
-      includes: "_includes", // Relative to input directory
-      layouts: "_includes", // Relative to input directory (can be same as includes)
-      data: "_data",       // Relative to input directory
-      output: "_site"      // Output directory
-    },
-    // Specify template engines if needed (optional, defaults work well)
-    // markdownTemplateEngine: "njk",
-    // htmlTemplateEngine: "njk",
-    // dataTemplateEngine: "njk", // <-- This was the last line in your code
-  }; // <--- ADD THIS CLOSING BRACE for the 'return' object
-};   // <--- ADD THIS CLOSING BRACE and SEMICOLON for 'module.exports'
+      input: "src",
+      includes: "_includes",
+      layouts: "_includes",
+      data: "_data",
+      output: "_site"
+    }
+  };
+};
