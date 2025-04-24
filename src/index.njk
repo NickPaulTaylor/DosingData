@@ -15,11 +15,7 @@ permalink: / # Generates index.html at the root
 {% block content %}
 
   {# --- START: Calculate Hero Posts --- #}
-
-  {# Get all featured posts from the collection #}
-  {% set featured = collections.featuredPosts %} {# Expect 5 items #}
-
-  {# Find the center post using the reliable loop method #}
+  {% set featured = collections.featuredPosts %}
   {% set centerPost = null %}
   {% for post in featured %}
     {% if post.data.featured_center === true %}
@@ -27,110 +23,76 @@ permalink: / # Generates index.html at the root
     {% endif %}
   {% endfor %}
 
-  {# --- Calculate sidePosts Manually (Confirmed Working Method) --- #}
-  {% set potentialSidePosts = [] %} {# Initialize empty array #}
+  {# --- Calculate sidePosts Manually (Proven Method)--- #}
+  {% set potentialSidePosts = [] %}
   {% if centerPost %}
-      {# Loop through original featured posts #}
       {% for post in featured %}
-          {# Add post only if its URL doesn't match the center post's URL #}
           {% if post.url != centerPost.url %}
-              {# Use working list concatenation method #}
               {% set potentialSidePosts = (potentialSidePosts.push(post), potentialSidePosts) %}
           {% endif %}
       {% endfor %}
   {% else %}
-      {# If no center post, all featured posts are potential sides #}
       {% set potentialSidePosts = featured %}
   {% endif %}
-  {# --- End Manual Calculation --- #}
-
-  {# Take the first 4 remaining posts to be side posts (should be 4) #}
-  {% set sidePosts = potentialSidePosts | slice(0, 4) %} {# Expect 4 items #}
-
-  {# Split the final side posts into left (first 2) and right (next 2) groups #}
-  {% set leftPosts = sidePosts | slice(0, 2) %}  {# Expect 2 items #}
-  {% set rightPosts = sidePosts | slice(2, 4) %} {# Expect 2 items #}
-
+  {% set sidePosts = potentialSidePosts | slice(0, 4) %}
   {# --- END: Calculate Hero Posts --- #}
 
 
-  {# --- START: Render Hero Section (Original Grid Layout) --- #}
-  {# Render the section only if there's content #}
-  {% if centerPost or sidePosts.length > 0 %}
-    <section class="hero-section">
+  {# --- START SLICE DEBUG --- #}
+  <div style="border: 3px solid brown; padding: 10px; margin: 15px 0; font-family: monospace; background-color: #fef;">
+      <h4 style="margin-top:0; color:brown;">SLICE DEBUG</h4>
+      <p><strong>sidePosts Count (Input to Slice): {{ sidePosts | length }}</strong></p>
+      <hr>
+      <p><strong>Testing slice(0, 2):</strong></p>
+      {% set testLeft = sidePosts | slice(0, 2) %}
+      <p>Count: {{ testLeft | length }}</p>
+      <ul>
+      {% set loopDidRunLeft = false %}
+      {% for p in testLeft %}
+         <li>{{ loop.index }}: {{ p.data.title | default("T MISSING", true) }}</li>
+         {% set loopDidRunLeft = true %}
+      {% else %}
+         <li style="color:red;">LEFT SLICE LOOP FAILED ({% raw %}{% else %}{% endraw %} block)</li>
+      {% endfor %}
+      {% if not loopDidRunLeft and testLeft | length > 0 %}<li style="color:red;">LEFT SLICE LOOP FAILED (Silent)</li>{% endif %}
+      {% if loopDidRunLeft %}<li style="color:green;">LEFT SLICE LOOP SUCCEEDED</li>{% endif %}
+      </ul>
+       <hr>
+      <p><strong>Testing slice(2, 4):</strong></p>
+      {% set testRight = sidePosts | slice(2, 4) %}
+      <p>Count: {{ testRight | length }}</p>
+      <ul>
+      {% set loopDidRunRight = false %}
+      {% for p in testRight %}
+         <li>{{ loop.index }}: {{ p.data.title | default("T MISSING", true) }}</li>
+          {% set loopDidRunRight = true %}
+      {% else %}
+         <li style="color:red;">RIGHT SLICE LOOP FAILED ({% raw %}{% else %}{% endraw %} block)</li>
+      {% endfor %}
+      {% if not loopDidRunRight and testRight | length > 0 %}<li style="color:red;">RIGHT SLICE LOOP FAILED (Silent)</li>{% endif %}
+      {% if loopDidRunRight %}<li style="color:green;">RIGHT SLICE LOOP SUCCEEDED</li>{% endif %}
+      </ul>
+       <hr>
+       <p><strong>Re-checking sidePosts after slicing (Count: {{ sidePosts | length }})</strong></p>
+       <p><em>(This confirms slice doesn't modify original)</em></p>
 
-      {# Left Side Column #}
-      <div class="hero-side hero-left">
-        {% for post in leftPosts %}
-          {{ cards.postCard(post, 'small') }}
-        {% endfor %}
-      </div>
-
-      {# Center Column Wrapper #}
-      <div class="hero-center-wrapper">
-        {% if centerPost %}
-          {{ cards.postCard(centerPost, 'large') }}
-        {% endif %}
-      </div>
-
-      {# Right Side Column #}
-      <div class="hero-side hero-right">
-        {% for post in rightPosts %}
-          {{ cards.postCard(post, 'small') }}
-        {% endfor %}
-      </div>
-
-    </section> {# End of hero-section #}
-
-    {# Horizontal separator line below the hero section #}
-    <hr class="hero-separator">
-
-  {% endif %} {# End of condition to render hero section #}
-  {# --- END: Render Hero Section --- #}
+  </div>
+  {# --- END SLICE DEBUG --- #}
 
 
-  {# --- START: Rest of the content (More Posts) --- #}
-  <h2>More Posts</h2>
-  <div class="post-grid">
+  {# --- Temporarily disable rendering --- #}
+  <p style="text-align: center; color: gray;">(Rendering temporarily disabled to focus on slice debug)</p>
+  {% set leftPosts = [] %}{# Prevent errors lower down #}
+  {% set rightPosts = [] %}{# Prevent errors lower down #}
 
-    {# Build list of hero URLs #}
-    {% set heroUrlsList = [] %}
-    {% if centerPost %}
-      {% set heroUrlsList = heroUrlsList + [centerPost.url] %}
-    {% endif %}
-    {# Use sidePosts which should now be correct (4 items) #}
-    {% for post in sidePosts %}
-       {# Use working list concatenation #}
-      {% set heroUrlsList = heroUrlsList + [post.url] %}
-    {% endfor %}
 
-    {# Loop through ALL posts #}
-    {% for post in collections.posts %}
-      {% if post.url not in heroUrlsList %}
+  {# --- START: Render Hero Section Placeholder --- #}
+   {# {% if centerPost or sidePosts.length > 0 %} ... {% endif %} #}
+  {# --- END: Render Hero Section Placeholder --- #}
 
-        {# Render post preview #}
-        <article class="post-preview">
-           <a href="{{ post.url | url }}" class="post-preview__link">
-             {% if post.data.featuredImage %}
-             <div class="post-preview__image-container">
-               <img src="{{ post.data.featuredImage | url }}" alt="" class="post-preview__image">
-             </div>
-             {% endif %}
-             <div class="post-preview__content">
-               <h3 class="post-preview__title">{{ post.data.title }}</h3>
-               {% if post.data.excerpt %}
-               <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
-               {% endif %}
-               {# Date filter still needs fixing separately #}
-               <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time>
-             </div>
-           </a>
-         </article>
 
-      {% endif %}
-    {% endfor %}
-
-  </div> {# End of post-grid #}
-  {# --- END: Rest of the content --- #}
+  {# --- START: Rest of the content Placeholder --- #}
+  {# <h2>More Posts</h2> ... #}
+  {# --- END: Rest of the content Placeholder--- #}
 
 {% endblock %}
