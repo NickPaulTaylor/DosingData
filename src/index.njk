@@ -14,131 +14,91 @@ permalink: / # Generates index.html at the root
 {# Define the content that goes into the 'content' block of base.njk #}
 {% block content %}
 
-  {# --- START: Calculate Hero Posts --- #}
-
-  {# Get all featured posts from the collection #}
-  {% set featured = collections.featuredPosts %} {# Expect 5 items #}
-
-  {# Find the center post using the reliable loop method #}
+  {# --- START: Radically Simplified Calculation --- #}
+  {% set allFeatured = collections.featuredPosts %}
   {% set centerPost = null %}
-  {% for post in featured %}
-    {% if post.data.featured_center === true %}
-        {% set centerPost = post %}
-    {% endif %}
-  {% endfor %}
-
-  {# --- Calculate sidePosts Manually (Confirmed Working Method) --- #}
-  {% set potentialSidePosts = [] %}
-  {% if centerPost %}
-      {% for post in featured %}
-          {% if post.url != centerPost.url %}
-              {% set potentialSidePosts = (potentialSidePosts.push(post), potentialSidePosts) %}
-          {% endif %}
-      {% endfor %}
-  {% else %}
-      {% set potentialSidePosts = featured %}
-  {% endif %}
-  {# Set sidePosts - we know this now contains 4 iterable items #}
-  {% set sidePosts = potentialSidePosts | slice(0, 4) %} {# Keep slice limit just in case initial list > 4 #}
-
-  {# --- Manually Split sidePosts into leftPosts and rightPosts (Avoid Slice Filter) --- #}
   {% set leftPosts = [] %}
   {% set rightPosts = [] %}
-  {% for post in sidePosts %}
-      {# loop.index is 1-based #}
-      {% if loop.index <= 2 %} {# First 2 items go to leftPosts #}
-          {% set leftPosts = leftPosts + [post] %}
-      {% elif loop.index <= 4 %} {# Items 3 and 4 go to rightPosts #}
-          {% set rightPosts = rightPosts + [post] %}
+  {% set sideCounter = 0 %} {# Track how many side posts we've assigned #}
+
+  {# Single loop through the original collection #}
+  {% for post in allFeatured %}
+      {# Try to find center post #}
+      {% if post.data.featured_center === true %}
+          {% set centerPost = post %}
+      {# Else, if it's not the center post, assign to sides #}
+      {% elif sideCounter < 4 %} {# Limit to 4 side posts total #}
+          {% set sideCounter = sideCounter + 1 %}
+          {# Assign first 2 side posts found to left #}
+          {% if sideCounter <= 2 %}
+              {% set leftPosts = leftPosts + [post] %}
+          {# Assign next 2 side posts found to right #}
+          {% else %}
+              {% set rightPosts = rightPosts + [post] %}
+          {% endif %}
       {% endif %}
   {% endfor %}
-  {# --- End Manual Split --- #}
-
-  {# --- END: Calculate Hero Posts --- #}
+  {# --- END: Radically Simplified Calculation --- #}
 
 
-  {# --- START MINIMAL COUNT DEBUG (Optional - Keep or Remove) --- #}
-  {# You can keep this line temporarily to verify the final counts #}
+  {# --- START MINIMAL COUNT DEBUG --- #}
   <div style="border: 1px solid teal; background-color: #eff; padding: 5px; margin: 10px 0; font-family: monospace; color: teal;">
-     DEBUG COUNTS :: side={{ sidePosts | length }} | left={{ leftPosts | length }} | right={{ rightPosts | length }}
+     DEBUG COUNTS :: centerPost={{ centerPost.data.title | default("Not Found", true) }} | left={{ leftPosts | length }} | right={{ rightPosts | length }}
   </div>
   {# --- END MINIMAL COUNT DEBUG --- #}
 
 
   {# --- START: Render Hero Section (Original Grid Layout) --- #}
   {# Render the section only if there's content #}
-  {% if centerPost or sidePosts.length > 0 %}
+  {% if centerPost or leftPosts.length > 0 or rightPosts.length > 0 %}
     <section class="hero-section">
-
-      {# Left Side Column #}
       <div class="hero-side hero-left">
-        {% for post in leftPosts %} {# Should now loop 2 times #}
-          {{ cards.postCard(post, 'small') }}
+        {% for p in leftPosts %}
+          {{ cards.postCard(p, 'small') }}
         {% endfor %}
       </div>
-
-      {# Center Column Wrapper #}
       <div class="hero-center-wrapper">
         {% if centerPost %}
           {{ cards.postCard(centerPost, 'large') }}
         {% endif %}
       </div>
-
-      {# Right Side Column #}
       <div class="hero-side hero-right">
-        {% for post in rightPosts %} {# Should now loop 2 times #}
-          {{ cards.postCard(post, 'small') }}
+        {% for p in rightPosts %}
+          {{ cards.postCard(p, 'small') }}
         {% endfor %}
       </div>
-
-    </section> {# End of hero-section #}
-
-    {# Horizontal separator line below the hero section #}
+    </section>
     <hr class="hero-separator">
-
-  {% endif %} {# End of condition to render hero section #}
+  {% endif %}
   {# --- END: Render Hero Section --- #}
 
 
   {# --- START: Rest of the content (More Posts) --- #}
   <h2>More Posts</h2>
   <div class="post-grid">
-
     {# Build list of hero URLs #}
     {% set heroUrlsList = [] %}
-    {% if centerPost %}
-      {% set heroUrlsList = heroUrlsList + [centerPost.url] %}
-    {% endif %}
-    {# Use sidePosts which should now be correct (4 items) #}
-    {% for post in sidePosts %}
-       {% set heroUrlsList = heroUrlsList + [post.url] %}
-    {% endfor %}
+    {% if centerPost %}{% set heroUrlsList = heroUrlsList + [centerPost.url] %}{% endif %}
+    {% for p in leftPosts %}{% set heroUrlsList = heroUrlsList + [p.url] %}{% endfor %}
+    {% for p in rightPosts %}{% set heroUrlsList = heroUrlsList + [p.url] %}{% endfor %}
 
     {# Loop through ALL posts #}
     {% for post in collections.posts %}
       {% if post.url not in heroUrlsList %}
-        {# Render post preview #}
-        <article class="post-preview">
+         {# Render post preview ... (same as before) ... #}
+         <article class="post-preview">
            <a href="{{ post.url | url }}" class="post-preview__link">
-             {% if post.data.featuredImage %}
-             <div class="post-preview__image-container">
-               <img src="{{ post.data.featuredImage | url }}" alt="" class="post-preview__image">
-             </div>
-             {% endif %}
+             {% if post.data.featuredImage %}<div class="post-preview__image-container"><img src="{{ post.data.featuredImage | url }}" alt="" class="post-preview__image"></div>{% endif %}
              <div class="post-preview__content">
                <h3 class="post-preview__title">{{ post.data.title }}</h3>
-               {% if post.data.excerpt %}
-               <p class="post-preview__excerpt">{{ post.data.excerpt }}</p>
-               {% endif %}
-               {# Date filter still needs fixing separately #}
+               {% if post.data.excerpt %}<p class="post-preview__excerpt">{{ post.data.excerpt }}</p>{% endif %}
                <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">{{ post.date | readableDate }}</time>
              </div>
            </a>
          </article>
       {% endif %}
     {% endfor %}
-
-  </div> {# End of post-grid #}
+  </div>
   {# --- END: Rest of the content --- #}
 
 {% endblock %}
