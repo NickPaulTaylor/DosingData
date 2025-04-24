@@ -1,18 +1,42 @@
-{# macros/post-card.njk #}
+{# _includes/macros/post-card.njk #}
 {% macro postCard(post, size = "small") %}
   <article class="post-card post-card--{{ size }}">
-    {# … image & title markup … #}
-
-    {% if post.data.excerpt %}
-      <p class="post-card__excerpt">
-        {% if size == "large" %}
-          {{ post.data.excerpt | truncate(300) }}
-        {% else %}
-          {{ post.data.excerpt | truncate(100) }}
-        {% endif %}
-      </p>
+    {# Image (if you have one) #}
+    {% if post.data.featuredImage %}
+      <div class="post-card__image-container">
+        <img 
+          src="{{ post.data.featuredImage | url }}" 
+          alt="{{ post.data.title | escape }}" 
+          class="post-card__image"
+        >
+      </div>
     {% endif %}
 
-    {# … date markup … #}
+    {# Content wrapper (title, excerpt, date) #}
+    <div class="post-card__content">
+      {# Title #}
+      <h3 class="post-card__title">
+        <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+      </h3>
+
+      {# Excerpt (truncated differently for large vs small) #}
+      {% if post.data.excerpt %}
+        <p class="post-card__excerpt">
+          {% if size == "large" %}
+            {{ post.data.excerpt | truncate(300) }}
+          {% else %}
+            {{ post.data.excerpt | truncate(100) }}
+          {% endif %}
+        </p>
+      {% endif %}
+
+      {# Date #}
+      <time 
+        datetime="{{ post.date | htmlDateString }}" 
+        class="post-card__date"
+      >
+        {{ post.date | readableDate }}
+      </time>
+    </div>
   </article>
 {% endmacro %}
