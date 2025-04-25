@@ -1,5 +1,3 @@
-/* src/css/style.css */
-
 /* Define color palette and fonts */
 :root {
   --color-primary: #283C50;    /* Dark Blue-Gray */
@@ -10,17 +8,14 @@
   --color-text: var(--color-primary);
   --color-text-light: #555555;
 
-  /* Example Fonts: Replace 'Lato' or 'Merriweather' if you choose others */
   --font-primary: 'Lato', sans-serif;
-  --font-secondary: 'Merriweather', serif; /* Optional secondary font */
+  --font-secondary: 'Merriweather', serif;
 
-  --content-max-width: 1300px; /* Max width for centered content */
-  --spacing-unit: 1rem; /* Base unit for margins/padding (e.g., 16px) */
+  --content-max-width: 1100px; /* Max width for centered content */
+  --spacing-unit: 1rem;
 
-  /* Define gaps based on spacing unit for consistency */
-  /* Using slightly larger gap for hero for visual separation */
-  --hero-gap: calc(var(--spacing-unit) * 1.25); /* Approx 20px if 1rem=16px */
-  --grid-gap: calc(var(--spacing-unit) * 2); /* Gap for main post grid */
+  --hero-gap: calc(var(--spacing-unit) * 1.25);
+  --grid-gap: calc(var(--spacing-unit) * 2);
 }
 
 /* --- Basic Reset and Body Styling --- */
@@ -33,7 +28,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-primary); /* Or adjust if using secondary font */
+  font-family: var(--font-primary);
   color: var(--color-primary);
   margin-top: calc(var(--spacing-unit) * 1.5);
   margin-bottom: calc(var(--spacing-unit) * 0.5);
@@ -57,103 +52,76 @@ a:hover {
 img {
   max-width: 100%;
   height: auto;
-  display: block; /* Remove extra space below images */
+  display: block;
 }
 
-/* --- Layout & Structure --- */
+/* --- Container --- */
 .container {
   max-width: var(--content-max-width);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: calc(var(--spacing-unit) * 1.5);
-  padding-right: calc(var(--spacing-unit) * 1.5);
+  margin: 0 auto;
+  padding: 0 calc(var(--spacing-unit) * 1.5);
 }
 
 /* --- Header Styling --- */
 .site-header {
-    padding: var(--spacing-unit) 0;
-    border-bottom: 1px solid var(--color-light-gray);
-    margin-bottom: calc(var(--spacing-unit) * 2);
+  padding: var(--spacing-unit) 0;
+  border-bottom: 1px solid var(--color-light-gray);
+  margin-bottom: calc(var(--spacing-unit) * 2);
 }
 
 .site-header .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Adjust alignment as needed */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logo img {
-    max-height: 75px;
-    width: auto;
+  max-height: 75px;
+  width: auto;
 }
 
-/* --- Basic Navigation Styling --- */
+/* --- Navigation --- */
 .main-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: var(--spacing-unit); /* Spacing between nav items */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: var(--spacing-unit);
 }
 
 .main-nav a {
-    color: var(--color-primary);
-    font-weight: bold;
-    text-decoration: none;
+  color: var(--color-primary);
+  font-weight: bold;
 }
+
 .main-nav a:hover,
 .main-nav a:focus {
-    color: var(--color-secondary);
-    text-decoration: underline;
+  color: var(--color-secondary);
+  text-decoration: underline;
 }
 
 /* --- Footer Styling --- */
 .site-footer {
-    margin-top: calc(var(--spacing-unit) * 3);
-    padding: calc(var(--spacing-unit) * 1.5) 0;
-    border-top: 1px solid var(--color-light-gray);
-    text-align: center;
-    font-size: 0.9em;
-    color: var(--color-text-light);
+  margin-top: calc(var(--spacing-unit) * 3);
+  padding: calc(var(--spacing-unit) * 1.5) 0;
+  border-top: 1px solid var(--color-light-gray);
+  text-align: center;
+  font-size: 0.9em;
+  color: var(--color-text-light);
 }
 
 /* ========================================================== */
 /* START: Hero Section Layout Styles (updated)               */
 /* ========================================================== */
-
 .hero-section {
   display: grid;
-  /* 3 Columns: Left Posts | Center Post | Right Posts */
-  grid-template-columns: 1fr 1.75fr 1fr;
-  /* TWO rows — this lets the center wrapper span both */
+  grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: auto auto;
   gap: var(--hero-gap);
   align-items: start;
-  margin-bottom: var(--hero-gap);
+  margin-bottom: 0;
   position: relative;
 }
-
-/* 1) Force each hero row to at least 300px */
-.hero-section {
-  grid-template-rows: minmax(300px, auto) minmax(300px, auto);
-}
-
-/* 2) Stretch cards to fill their grid cells */
-.hero-side .post-card,
-.hero-center-wrapper .post-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-
-/* 4) (Optional) Add extra vertical padding inside cards */
-.post-card__content {
-  padding-top: calc(var(--spacing-unit) * 1.5);
-  padding-bottom: calc(var(--spacing-unit) * 1.5);
-}
-
 
 .hero-side {
   display: flex;
@@ -162,11 +130,9 @@ img {
 }
 
 .hero-center-wrapper {
-  /* place center in column 2 and span both grid rows */
   grid-column: 2;
   grid-row: 1 / span 2;
 
-  /* keep your vertical divider lines */
   border-left: 1px solid var(--color-light-gray);
   border-right: 1px solid var(--color-light-gray);
   padding-left: var(--hero-gap);
@@ -174,21 +140,49 @@ img {
   box-sizing: border-box;
 }
 
-/* …then all your .post-card, hr.hero-separator, responsive media queries, etc, stay exactly as-is… */
+/* Stretch cards to fill their rows */
+.hero-side .post-card,
+.hero-center-wrapper .post-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
+/* Let images expand in their container */
+.post-card__image-container {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* Center post image taller, headline bigger */
+.post-card--large .post-card__image {
+  aspect-ratio: 4 / 3;
+}
+
+.post-card--large .post-card__title {
+  font-size: 2.5em;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+/* Flush the <hr> up against the hero */
+hr.hero-separator {
+  border: none;
+  border-top: 1px solid var(--color-light-gray);
+  margin-top: 0;
+  margin-bottom: var(--grid-gap);
+}
 /* ========================================================== */
 /* END: Hero Section Layout Styles                           */
 /* ========================================================== */
 
-
-/* --- Post Grid Styling (Homepage - Existing styles) --- */
+/* --- Post Grid Styling --- */
 .post-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-  gap: var(--grid-gap); /* Use defined gap variable */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--grid-gap);
 }
 
-/* Keep your detailed .post-preview styles */
 .post-preview {
   background-color: var(--color-background);
   border: 1px solid var(--color-light-gray);
@@ -203,15 +197,15 @@ img {
 }
 
 .post-preview__link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
+  display: block;
+  color: inherit;
+  text-decoration: none;
 }
 
 .post-preview__image-container {
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background-color: var(--color-light-gray);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: var(--color-light-gray);
 }
 
 .post-preview__image {
@@ -222,7 +216,7 @@ img {
 }
 
 .post-preview:hover .post-preview__image {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .post-preview__content {
@@ -237,9 +231,9 @@ img {
 }
 
 .post-preview__excerpt {
-    font-size: 0.95em;
-    color: var(--color-text-light);
-    margin-bottom: calc(var(--spacing-unit) * 0.75);
+  font-size: 0.95em;
+  color: var(--color-text-light);
+  margin-bottom: calc(var(--spacing-unit) * 0.75);
 }
 
 .post-preview__date {
@@ -249,30 +243,30 @@ img {
   margin-top: calc(var(--spacing-unit) * 0.5);
 }
 
-/* --- Individual Post Styling (Single Post Page) --- */
+/* --- Single Post Content --- */
 .post-content {
-    max-width: 750px;
-    margin: calc(var(--spacing-unit) * 2) auto;
+  max-width: 750px;
+  margin: calc(var(--spacing-unit) * 2) auto;
 }
 
 .post-content img {
-    margin-top: var(--spacing-unit);
-    margin-bottom: var(--spacing-unit);
-    border-radius: 4px;
+  margin-top: var(--spacing-unit);
+  margin-bottom: var(--spacing-unit);
+  border-radius: 4px;
 }
 
 .post-content h1 {
-    font-size: 2.5em;
-    margin-bottom: calc(var(--spacing-unit) * 0.25);
+  font-size: 2.5em;
+  margin-bottom: calc(var(--spacing-unit) * 0.25);
 }
 
 .post-meta {
-    color: var(--color-text-light);
-    margin-bottom: calc(var(--spacing-unit) * 2);
-    font-size: 0.9em;
+  color: var(--color-text-light);
+  margin-bottom: calc(var(--spacing-unit) * 2);
+  font-size: 0.9em;
 }
 
-/* --- Graph Styling (Existing styles) --- */
+/* --- Graph Styling --- */
 .dosing-data-graph {
   margin-top: calc(var(--spacing-unit) * 1.5);
   margin-bottom: calc(var(--spacing-unit) * 1.5);
@@ -283,38 +277,87 @@ img {
 }
 
 .dosing-data-graph .bar {
-    fill: var(--color-secondary);
+  fill: var(--color-secondary);
 }
 .dosing-data-graph .bar:hover {
-    fill: var(--color-accent);
+  fill: var(--color-accent);
 }
 .dosing-data-graph .axis {
-    stroke: var(--color-text-light);
-    stroke-width: 1px;
+  stroke: var(--color-text-light);
+  stroke-width: 1px;
 }
 .dosing-data-graph .axis-label,
 .dosing-data-graph .tick-label {
-    fill: var(--color-text);
-    font-family: var(--font-primary);
-    font-size: 0.8em;
+  fill: var(--color-text);
+  font-family: var(--font-primary);
+  font-size: 0.8em;
 }
 .dosing-data-graph .graph-line {
-    stroke: var(--color-accent);
-    stroke-width: 2px;
-    fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2px;
+  fill: none;
 }
 .dosing-data-graph .tooltip {
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    padding: calc(var(--spacing-unit) * 0.5);
-    border-radius: 4px;
-    font-size: 0.9em;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  padding: calc(var(--spacing-unit) * 0.5);
+  border-radius: 4px;
+  font-size: 0.9em;
 }
 
-/* --- Additional Responsive adjustments (keep existing if needed) --- */
-@media (max-width: 600px) {
-    /* Adjust grid columns for remaining posts */
-    .post-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: calc(var(--hero-gap) * 1.5);
+  }
+  .hero-center-wrapper {
+    border-left: none;
+    border-right: none;
+    padding: 0;
+  }
+  .hero-center-wrapper { order: 1; }
+  .hero-side.hero-left { order: 2; }
+  .hero-side.hero-right { order: 3; }
 }
+
+@media (max-width: 600px) {
+  .post-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+/* ===== Collapse the space under the hero ===== */
+
+.hero-section {
+  /* just in case */
+  margin-bottom: 0 !important;
+}
+
+hr.hero-separator {
+  /* remove *all* its margins */
+  margin: 0 !important;
+}
+
+hr.hero-separator + h2 {
+  /* remove the h2’s top-margin when it immediately follows the hr */
+  margin-top: 0 !important;
+}
+/* ===== Adjust spacing under the hero ===== */
+
+/* Hero itself stays flush to the hr */
+.hero-section {
+  margin-bottom: 0 !important;
+}
+
+/* Give the hr the same top-gap as you use under your header */
+hr.hero-separator {
+  margin: var(--grid-gap) 0 0 0 !important;
+/*  ^^^^^^^^
+     top margin = 2 × --spacing-unit (your existing grid-gap) */
+}
+
+/* And make the very next H2 sit tight to that line */
+hr.hero-separator + h2 {
+  margin-top: 0 !important;
+}
+
