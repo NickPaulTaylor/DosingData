@@ -1,6 +1,5 @@
 ---
-title: About Dosing Data
-layout: base.njk
+layout: page.njk
 permalink: /about/
 ---
 

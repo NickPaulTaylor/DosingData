@@ -1,0 +1,14 @@
+{# src/_includes/page.njk #}
+{% extends "base.njk" %}
+
+{% block content %}
+<article class="container post-content">
+    <h1>{{ title }}</h1>
+    <div class="post-meta">
+    </div>
+
+    {# The actual post content, processed from Markdown #}
+    {{ content | safe }}
+
+</article>
+{% endblock %}

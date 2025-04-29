@@ -35,10 +35,11 @@
   </header>
 
 <main>
-    {# Content from extending templates (index.njk, post.njk) goes here #}
-    {% block content %}
-    {# This is where Nunjucks will insert the content from the child template's matching block #}
-    {% endblock %}
+  {% block content %}
+    {# If a child Nunjucks template overrides this block, this next line will be ignored #}
+    {# If a Markdown file uses this layout, its content goes here #}
+    {{ content | safe }}
+  {% endblock %}
 </main>
 
   <footer class="site-footer">
