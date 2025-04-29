@@ -26,3 +26,15 @@ collections:
       - { label: "Feature in Hero Section?", name: "featured", widget: "boolean", default: false, required: false }
       - { label: "Make this the Central Hero Post?", name: "featured_center", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown" } # Main content area (Markdown editor)
+
+  - name: "pages"              # Internal identifier for the collection
+    label: "Pages"             # How it appears in the CMS UI
+    files:                     # Defines a list of specific files to manage
+      - label: "About Page"    # Label for this specific file in the CMS
+        name: "about"          # Internal name for this file entry
+        file: "src/about.md"   # Path to the file RELATIVE TO YOUR PROJECT ROOT
+        fields:                # Fields to edit for this file
+          - { label: "Title", name: "title", widget: "string" } # Edit the title
+          - { label: "Layout", name: "layout", widget: "hidden", default: "base.njk" } # Keep layout hidden, default to base
+          - { label: "Permalink", name: "permalink", widget: "hidden", default: "/about/" } # Keep permalink hidden
+          - { label: "Body", name: "body", widget: "markdown" } # Edit the main content
