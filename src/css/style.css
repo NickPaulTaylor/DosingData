@@ -154,6 +154,11 @@ img {
   overflow: hidden;
 }
 
+/* General style for all post card titles (including hero posts) */
+.post-card__title {
+  color: var(--color-primary);
+}
+
 /* Center post image taller, headline bigger */
 .post-card--large .post-card__image {
   aspect-ratio: 4 / 3;
@@ -191,11 +196,6 @@ hr.hero-separator {
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.post-preview:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
 .post-preview__link {
   display: block;
   color: inherit;
@@ -215,10 +215,6 @@ hr.hero-separator {
   transition: transform 0.3s ease;
 }
 
-.post-preview:hover .post-preview__image {
-  transform: scale(1.05);
-}
-
 .post-preview__content {
   padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
 }
@@ -232,7 +228,7 @@ hr.hero-separator {
 
 .post-preview__excerpt {
   font-size: 0.95em;
-  color: var(--color-text-light);
+  color: var(--color-text);
   margin-bottom: calc(var(--spacing-unit) * 0.75);
 }
 

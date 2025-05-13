@@ -61,12 +61,19 @@ permalink: /
              {% endif %}
 
              <div class="post-preview__content">
-               <h3 class="post-preview__title">{{ post.data.title }}</h3>
-               {% if post.data.excerpt %}
-                 <p class="post-preview__excerpt">{{ post.data.excerpt | truncate(80) }}</p>
-               {% endif %}
-               <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">
-                 {{ post.date | readableDate }}
+            {# Link for the title ONLY #}
+            <h3 class="post-preview__title">
+              <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+            </h3>
+
+            {# Excerpt - NO link #}
+            {% if post.data.excerpt %}
+              <p class="post-preview__excerpt">{{ post.data.excerpt | truncate(80) }}</p>
+            {% endif %}
+
+            {# Date - NO link #}
+            <time datetime="{{ post.date | htmlDateString }}" class="post-preview__date">
+              {{ post.date | readableDate }}
                </time>
              </div>
 
