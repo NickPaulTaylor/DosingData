@@ -243,6 +243,7 @@ hr.hero-separator {
 .post-content {
   max-width: 750px;
   margin: calc(var(--spacing-unit) * 2) auto;
+  font-size: 1.3em;
 }
 
 .post-content img {
@@ -308,6 +309,7 @@ hr.hero-separator {
     gap: calc(var(--hero-gap) * 1.5);
   }
   .hero-center-wrapper {
+    grid-column: 1;
     border-left: none;
     border-right: none;
     padding: 0;
