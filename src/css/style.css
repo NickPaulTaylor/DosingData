@@ -184,8 +184,21 @@ hr.hero-separator {
 /* --- Post Grid Styling --- */
 .post-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--grid-gap);
+  margin-top: var(--grid-gap); /* Add space below the h2 */
+}
+
+@media (max-width: 900px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .post-preview {
@@ -319,11 +332,6 @@ hr.hero-separator {
   .hero-side.hero-right { order: 3; }
 }
 
-@media (max-width: 600px) {
-  .post-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-}
 /* ===== Adjust spacing under the hero ===== */
 
 /* Hero itself stays flush to the hr */
@@ -343,23 +351,7 @@ hr.hero-separator {
   margin: var(--grid-gap) 0 0 0 !important;
 
 }
-.post-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--grid-gap);
-}
 
-@media (max-width: 900px) {
-  .post-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .post-grid {
-    grid-template-columns: 1fr;
-  }
-}
 /* Compact Post Card */
 .post-card--compact {
   display: flex;
@@ -392,27 +384,62 @@ hr.hero-separator {
   color: #888;
   margin-top: auto;
 }
-.post-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
-  gap: var(--grid-gap); /* Use your defined gap variable */
-  margin-top: var(--grid-gap); /* Add space below the h2, if not handled by h2 margin */
-}
+/* Add this to your existing CSS file */
 
-/* Optional: Ensure cards within the grid behave well */
-.post-grid .post-card {
-   height: 100%; /* Makes cards in a row equal height if needed */
-   display: flex;
-   flex-direction: column;
-}
-.post-grid .post-card__image-container {
-   flex: 1; /* Allows image container to grow */
-   overflow: hidden;
-}
-/* You might need to adjust image aspect ratio or other styles */
-.post-grid .post-card__image {
-   /* Consider adding aspect-ratio or max-height if needed */
-   width: 100%;
-   height: auto; /* Or set a fixed aspect ratio */
-   object-fit: cover;
+/* Mobile Post Layout - Horizontal with right image */
+@media (max-width: 768px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+    gap: calc(var(--spacing-unit) * 1);
+  }
+  
+  /* Convert vertical post previews to horizontal layout on mobile with image on right */
+  .post-preview {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    gap: calc(var(--spacing-unit) * 0.75);
+    padding: calc(var(--spacing-unit) * 0.75);
+  }
+  
+  /* Remove the border since we're adding padding to the container */
+  .post-preview__content {
+    padding: 0;
+    flex: 1;
+  }
+  
+  /* Make image container smaller and fixed width */
+  .post-preview__image-container {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+  }
+  
+  /* Adjust typography for mobile */
+  .post-preview__title {
+    font-size: 1.1em;
+    margin-top: 0;
+    margin-bottom: calc(var(--spacing-unit) * 0.25);
+  }
+  
+  .post-preview__excerpt {
+    font-size: 0.9em;
+    margin-bottom: calc(var(--spacing-unit) * 0.25);
+    /* Optional: limit to 2-3 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .post-preview__date {
+    font-size: 0.8em;
+    margin-top: calc(var(--spacing-unit) * 0.25);
+  }
+  
+  /* Make sure links work properly with the new layout */
+  .post-preview__link {
+    display: contents;
+  }
 }
