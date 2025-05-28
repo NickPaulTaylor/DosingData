@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "eleventy",
+    "dev": "eleventy --serve --watch",
+    "debug": "DEBUG=Eleventy* eleventy",
+    "clean": "rm -rf _site",
+    "start": "npm run dev",
+    "audit": "npm audit",
+    "lint": "echo 'Add linting tool here if needed'"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +20,7 @@
     "luxon": "^3.6.1"
   },
   "dependencies": {
+    "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
     "a-sync-waterfall": "^1.0.1",
     "acorn": "^8.14.1",
     "acorn-walk": "^8.3.4",

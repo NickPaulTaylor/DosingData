@@ -28,6 +28,53 @@
 
   {# Add metadata block for page-specific head elements if needed #}
   {% block head %}{% endblock %}
+{# Add this to your base.njk <head> section #}
+
+{# Basic SEO #}
+<meta name="description" content="{{ excerpt or description or metadata.description }}">
+<meta name="author" content="{{ author or metadata.author }}">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ metadata.url }}{{ page.url }}">
+
+{# Open Graph (Facebook, LinkedIn) #}
+<meta property="og:type" content="{% if layout == 'post' %}article{% else %}website{% endif %}">
+<meta property="og:title" content="{{ title or metadata.title }}">
+<meta property="og:description" content="{{ excerpt or description or metadata.description }}">
+<meta property="og:url" content="{{ metadata.url }}{{ page.url }}">
+<meta property="og:site_name" content="{{ metadata.title }}">
+{% if featuredImage %}
+<meta property="og:image" content="{{ metadata.url }}{{ featuredImage }}">
+{% endif %}
+
+{# Twitter Cards #}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ title or metadata.title }}">
+<meta name="twitter:description" content="{{ excerpt or description or metadata.description }}">
+{% if featuredImage %}
+<meta name="twitter:image" content="{{ metadata.url }}{{ featuredImage }}">
+{% endif %}
+
+{# Favicon (create these files) #}
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+{# JSON-LD Structured Data #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{% if layout == 'post' %}BlogPosting{% else %}WebSite{% endif %}",
+  "name": "{{ title or metadata.title }}",
+  "description": "{{ excerpt or description or metadata.description }}",
+  "url": "{{ metadata.url }}{{ page.url }}"
+  {% if layout == 'post' %},
+  "datePublished": "{{ date | htmlDateString }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ author or metadata.author }}"
+  }
+  {% endif %}
+}
+</script>
 </head>
 <body>
   <header class="site-header">

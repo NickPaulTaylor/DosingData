@@ -1,6 +1,9 @@
 // Require the luxon library for date handling
 const { DateTime } = require("luxon");
+const sitemap = require("@quasibit/eleventy-plugin-sitemap");
+const eleventyPluginRss = require("@11ty/eleventy-plugin-rss");
 
+eleventyConfig.addPlugin(eleventyPluginRss);
 module.exports = function(eleventyConfig) {
 
     /**
@@ -47,13 +50,6 @@ module.exports = function(eleventyConfig) {
   // Defines the 'posts' collection (all posts, sorted newest first)
   eleventyConfig.addCollection("posts", function(collectionApi) {
     const posts = collectionApi.getFilteredByGlob("src/posts/**/*.md");
-
-    // --- Debugging: Log found files and their dates ---
-    console.log(`[DEBUG] Found ${posts.length} files in src/posts/ by glob for 'posts' collection.`);
-    posts.forEach(p => {
-      console.log(`[DEBUG] -> File: ${p.inputPath}, Date from Eleventy: ${p.date}`);
-    });
-    // --- End Debugging ---
 
     const sortedPosts = posts.sort((a, b) => {
       const dateA = new Date(a.date);
