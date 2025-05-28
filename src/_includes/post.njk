@@ -1,32 +1,58 @@
-{# src/_includes/post.njk #}
-{% extends "base.njk" %}
+{# src/_includes/base.njk #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title or metadata.title }}</title> {# Use front matter title or a default #}
 
-{% block content %}
-<article class="container post-content">
-    <h1>{{ title }}</h1>
-    <div class="post-meta">
-        <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
-        {# Add author etc. if available in front matter: - By {{ author }} #}
+  {# Link Google Fonts (Example: Lato) - Replace if using different fonts #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+  {# Link your CSS file #}
+  <link rel="stylesheet" href="/css/style.css">
+
+  {# Add metadata block for page-specific head elements if needed #}
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">
+        {# Assuming logo is copied to img/logo.png - adjust path #}
+        <img src="/img/logo.png" alt="Dosing Data Logo">
+      </a>
+      <nav class="main-nav">
+        {# Basic nav example - Make this dynamic later if needed #}
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About</a></li> {# Example link #}
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    {# The actual post content, processed from Markdown #}
+<main>
+  {% block content %}
+    {# If a child Nunjucks template overrides this block, this next line will be ignored #}
+    {# If a Markdown file uses this layout, its content goes here #}
     {{ content | safe }}
+  {% endblock %}
+</main>
 
-{# src/_includes/post.njk #}
-{% extends "base.njk" %}
-{% import "macros/social-share.njk" as share %}
-
-{% block content %}
-<article class="container post-content">
-    <h1>{{ title }}</h1>
-    <div class="post-meta">
-        <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
-        {# Add author etc. if available in front matter: - By {{ author }} #}
-        {{ share.socialShare() }}
+  <footer class="site-footer">
+    <div class="container">
+      &copy; {% year %} Dosing Data Blog. All rights reserved. {# Assumes 'year' shortcode/filter #}
     </div>
+  </footer>
 
-    {# The actual post content, processed from Markdown #}
-    {{ content | safe }}
+  {# Include existing JavaScript #}
+  <script src="/clickable-cards.js"></script>
+  
+  {# Add the social sharing JavaScript #}
+  <script src="/js/social-share.js"></script>
 
-</article>
-{% endblock %}
+</body>
+</html>
