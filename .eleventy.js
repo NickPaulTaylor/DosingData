@@ -24,6 +24,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");       // For compiled CSS
   eleventyConfig.addPassthroughCopy("src/img");       // For site images (like logo)
   eleventyConfig.addPassthroughCopy("_headers");      // For Netlify security headers
+  eleventyConfig.addPassthroughCopy("src/js");
 
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 23, 2025)

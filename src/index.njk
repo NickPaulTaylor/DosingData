@@ -52,7 +52,6 @@ permalink: /
      {% for post in collections.posts %}
        {% if post.url not in heroUrlsList %}
          <article class="post-preview">
-           <a href="{{ post.url | url }}" class="post-preview__link">
 
              {% if post.data.featuredImage %}
                <div class="post-preview__image-container">
