@@ -3,21 +3,19 @@ const { DateTime } = require("luxon");
 const sitemap = require("@quasibit/eleventy-plugin-sitemap");
 const eleventyPluginRss = require("@11ty/eleventy-plugin-rss");
 
-eleventyConfig.addPlugin(eleventyPluginRss);
 module.exports = function(eleventyConfig) {
 
-    /**
+  /**
    * Truncate a string to `length` characters, adding `omission` if clipped.
    * @param  {string} str
    * @param  {number} length
    * @param  {string} omission
    */
-    eleventyConfig.addFilter("truncate", function(str = "", length = 100, omission = "...") {
-      if (typeof str !== "string") return "";
-      if (str.length <= length) return str;
-      return str.slice(0, length).trim() + omission;
-    });
-  
+  eleventyConfig.addFilter("truncate", function(str = "", length = 100, omission = "...") {
+    if (typeof str !== "string") return "";
+    if (str.length <= length) return str;
+    return str.slice(0, length).trim() + omission;
+  });
 
   // --- Passthrough Copies ---
   // Copy directories/files directly to the output directory (_site)
@@ -25,8 +23,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");    // For general assets (JS, fonts maybe)
   eleventyConfig.addPassthroughCopy("src/css");       // For compiled CSS
   eleventyConfig.addPassthroughCopy("src/img");       // For site images (like logo)
-  eleventyConfig.addPassthroughCopy("src/js");        // Add this line for JavaScript files
-  
+  eleventyConfig.addPassthroughCopy("_headers");      // For Netlify security headers
+
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 23, 2025)
   eleventyConfig.addFilter("readableDate", (dateObj, format = "LLL dd, yyyy") => {
@@ -50,6 +48,13 @@ module.exports = function(eleventyConfig) {
   // Defines the 'posts' collection (all posts, sorted newest first)
   eleventyConfig.addCollection("posts", function(collectionApi) {
     const posts = collectionApi.getFilteredByGlob("src/posts/**/*.md");
+
+    // --- Debugging: Log found files and their dates ---
+    console.log(`[DEBUG] Found ${posts.length} files in src/posts/ by glob for 'posts' collection.`);
+    posts.forEach(p => {
+      console.log(`[DEBUG] -> File: ${p.inputPath}, Date from Eleventy: ${p.date}`);
+    });
+    // --- End Debugging ---
 
     const sortedPosts = posts.sort((a, b) => {
       const dateA = new Date(a.date);
@@ -115,9 +120,16 @@ module.exports = function(eleventyConfig) {
   // *** END: Added heroPosts Collection ***
 
   // --- Plugin Configuration ---
-  // (Uncomment and configure any plugins you need)
-  // const eleventyPluginRss = require("@11ty/eleventy-plugin-rss");
-  // eleventyConfig.addPlugin(eleventyPluginRss);
+  // ✅ CORRECT - This is INSIDE the function where eleventyConfig is available
+  // RSS Plugin
+  eleventyConfig.addPlugin(eleventyPluginRss);
+  
+  // Sitemap Plugin
+  eleventyConfig.addPlugin(sitemap, {
+    sitemap: {
+      hostname: "https://dosingdata.com", // Replace with your actual domain
+    },
+  });
 
   // --- Return Base Configuration ---
   return {
