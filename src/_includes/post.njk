@@ -1,5 +1,6 @@
 {# src/_includes/post.njk #}
 {% extends "base.njk" %}
+{% import "components/newsletter-form.njk" as newsletter %}
 
 {% block content %}
 <article class="container post-content">
@@ -66,6 +67,12 @@
 
     {# The actual post content, processed from Markdown #}
     {{ content | safe }}
+
+{{ newsletter.newsletterForm(
+    title="More Insights Like This?",
+    description="Join biopharma professionals getting monthly data analysis roundups.",
+    buttonText="Count Me In"
+) }}
 
 </article>
 {% endblock %}

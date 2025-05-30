@@ -1,0 +1,392 @@
+/* Newsletter Form Styles */
+
+/* Zoho Success Popup Responsive Styles */
+@media only screen and (max-width: 319px){
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:260px;
+      top:24% !important;
+      left:30% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  /*Major Mobiles*/
+  @media screen and (min-width: 320px) and (max-width: 580px){
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:220px;
+      top:5% !important;
+      left:10% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  /*Nexus and iPhone 6,6s*/ 
+  @media screen and (min-width: 374px) and (max-width: 680px){
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:220px;
+      top:5% !important;
+      left:18% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  @media screen and (min-width:581px) and (max-width: 767px){
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:500px;
+      top:24% !important;
+      left:6% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  /* Desktops and laptops */
+  @media only screen and (min-width : 1025px) {
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:700px;
+      top:24% !important;
+      left:21% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  @media only screen and (min-width:1200px) and (max-width: 1500px){
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:700px;
+      top:24% !important;
+      left:20% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  @media only screen and (min-width:1501px) and (max-width: 1700px){
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:700px;
+      top:24% !important;
+      left:25% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  /* Large Screens */
+  @media only screen and (min-width : 1824px) {
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:700px;
+      top:24% !important;
+      left:30% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  /* iPads*/
+  @media only screen and (min-width : 768px) and (max-width : 1024px){
+    #zcOptinSuccessPopup{
+      width:100% !important;
+      max-width:600px;
+      top:14% !important;
+      left:18.7% !important;
+    }
+    #THANKS_PAGE_BODY_PARENT{
+      width:100% !important;
+    }
+    #THANKS_PAGE_CONTAINER{
+      padding:0px !important;
+    }
+    #THANKSPAGE{
+      padding:10px !important;
+    }
+    #THANKS_PAGE_BODY{
+      padding:20px !important;
+    }
+  }
+  
+  #customForm > div {
+    margin: 0 auto;
+  }
+  
+  /* Newsletter Form Container */
+  .newsletter-section {
+    background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+    color: white;
+    padding: calc(var(--spacing-unit) * 3) 0;
+    margin: calc(var(--spacing-unit) * 4) 0;
+    border-radius: var(--border-radius);
+    text-align: center;
+  }
+  
+  .newsletter-form-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Override Zoho form styles to match site design */
+  .SIGNUP_PAGE {
+    background-color: transparent !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+  }
+  
+  #SIGNUP_HEADING {
+    background-color: transparent !important;
+    color: white !important;
+    font-family: var(--font-primary) !important;
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    margin-bottom: calc(var(--spacing-unit) * 1.5) !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  
+  #SIGNUP_BODY {
+    background-color: transparent !important;
+    color: white !important;
+    font-family: var(--font-primary) !important;
+    padding: 0 !important;
+  }
+  
+  #SIGNUP_DESCRIPTION {
+    font-size: 1.1rem !important;
+    margin-bottom: calc(var(--spacing-unit) * 2) !important;
+    opacity: 0.9;
+  }
+  
+  /* Form Fields */
+  .zcsffield {
+    margin-bottom: calc(var(--spacing-unit) * 1) !important;
+  }
+  
+  .zcsffield input[type="email"],
+  .zcsffield input[type="text"] {
+    width: 100% !important;
+    padding: 15px 20px !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: var(--border-radius) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    font-family: var(--font-primary) !important;
+    font-size: 1rem !important;
+    transition: all var(--transition-speed) ease !important;
+    box-sizing: border-box !important;
+    text-indent: 0 !important;
+    height: auto !important;
+  }
+  
+  .zcsffield input[type="email"]:focus,
+  .zcsffield input[type="text"]:focus {
+    outline: none !important;
+    border-color: white !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .zcsffield input[type="email"]::placeholder,
+  .zcsffield input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+  
+  /* Form Labels */
+  .zcsffield [name="SIGNUP_FORM_LABEL"] {
+    color: white !important;
+    font-family: var(--font-primary) !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+    text-align: left !important;
+  }
+  
+  /* Required field indicator */
+  [name="SIGNUP_REQUIRED"] {
+    color: #ffcccb !important;
+  }
+  
+  /* Submit Button */
+  #zcWebOptin {
+    background: white !important;
+    color: var(--color-primary) !important;
+    border: none !important;
+    border-radius: var(--border-radius) !important;
+    padding: 15px 30px !important;
+    font-family: var(--font-primary) !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all var(--transition-speed) ease !important;
+    width: 100% !important;
+    margin-top: calc(var(--spacing-unit) * 1) !important;
+  }
+  
+  #zcWebOptin:hover {
+    background: rgba(255, 255, 255, 0.9) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* Required fields text */
+  #REQUIRED_FIELD_TEXT {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-family: var(--font-primary) !important;
+    font-size: 0.9rem !important;
+    text-align: left !important;
+    margin-top: calc(var(--spacing-unit) * 1) !important;
+  }
+  
+  /* Error messages */
+  #errorMsgDiv {
+    background-color: rgba(255, 235, 232, 0.9) !important;
+    color: #d20000 !important;
+    border: 1px solid #ffd9d3 !important;
+    border-radius: var(--border-radius) !important;
+    font-family: var(--font-primary) !important;
+  }
+  
+  /* Success message */
+  #Zc_SignupSuccess {
+    background-color: white !important;
+    border: 3px solid var(--color-accent) !important;
+    border-radius: var(--border-radius) !important;
+    color: var(--color-primary) !important;
+  }
+  
+  #signupSuccessMsg {
+    color: var(--color-primary) !important;
+    font-family: var(--font-primary) !important;
+    font-size: 1rem !important;
+  }
+  
+  /* reCAPTCHA container */
+  #recapDiv {
+    margin: calc(var(--spacing-unit) * 1) auto !important;
+    max-width: 100% !important;
+  }
+  
+  /* Hide Zoho branding/logos if needed */
+  #imgBlock {
+    display: none !important;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .newsletter-section {
+      margin: calc(var(--spacing-unit) * 2) 0;
+      padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 1);
+    }
+    
+    #SIGNUP_HEADING {
+      font-size: 2rem !important;
+    }
+    
+    #SIGNUP_DESCRIPTION {
+      font-size: 1rem !important;
+    }
+    
+    .zcsffield input[type="email"],
+    .zcsffield input[type="text"] {
+      padding: 12px 16px !important;
+    }
+  }
+  
+  /* Success popup customization */
+  #zcOptinSuccessPopup {
+    border-radius: var(--border-radius) !important;
+    font-family: var(--font-primary) !important;
+  }
+  
+  #zcOptinOverLay {
+    backdrop-filter: blur(4px);
+  }
