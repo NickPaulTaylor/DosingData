@@ -27,6 +27,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("favicon.ico");
   eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
+  eleventyConfig.addPassthroughCopy("public");
 
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 23, 2025)
