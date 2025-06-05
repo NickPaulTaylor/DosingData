@@ -34,13 +34,9 @@
   {# Link your CSS file #}
   <link rel="stylesheet" href="/css/style.css">
 
-  {# Zoho Marketing Automation Scripts #}
-  <script type="text/javascript" src="https://ma.zoho.eu/js/optin.min.js" onload="setupSF('sf3z8be0439aa88f7d9d2e06629ed3cef8528f796b4ee3ea438a702efca5c732b4d5','ZCFORMVIEW',false,'light')"></script>
-  <script type="text/javascript">
-    function runOnFormSubmit_sf3z8be0439aa88f7d9d2e06629ed3cef8528f796b4ee3ea438a702efca5c732b4d5(th){
-      /*Before submit, if you want to trigger your event, "include your code here"*/
-    };
-  </script>
+ {# Favicon links #}
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
   {# Add metadata block for page-specific head elements if needed #}
   {% block head %}{% endblock %}
@@ -69,10 +65,6 @@
 {% if featuredImage %}
 <meta name="twitter:image" content="{{ metadata.url }}{{ featuredImage }}">
 {% endif %}
-
-{# Favicon (create these files) #}
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
 {# JSON-LD Structured Data #}
 <script type="application/ld+json">
