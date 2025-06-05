@@ -885,7 +885,7 @@ button:focus {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .newsletter-submit-btn:hover {
@@ -937,5 +937,4 @@ button:focus {
 .newsletter-input.success {
   border-color: #28a745;
   background-color: #f8fff9;
-}
 }
