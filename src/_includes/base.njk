@@ -54,17 +54,13 @@
 <meta property="og:description" content="{{ excerpt or description or metadata.description }}">
 <meta property="og:url" content="{{ metadata.url }}{{ page.url }}">
 <meta property="og:site_name" content="{{ metadata.title }}">
-{% if featuredImage %}
-<meta property="og:image" content="{{ metadata.url }}{{ featuredImage }}">
-{% endif %}
+<meta property="og:image" content="{{ metadata.url }}{{ featuredImage or metadata.defaultImage }}">
 
 {# Twitter Cards #}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ title or metadata.title }}">
 <meta name="twitter:description" content="{{ excerpt or description or metadata.description }}">
-{% if featuredImage %}
-<meta name="twitter:image" content="{{ metadata.url }}{{ featuredImage }}">
-{% endif %}
+<meta name="twitter:image" content="{{ metadata.url }}{{ featuredImage or metadata.defaultImage }}">
 
 {# JSON-LD Structured Data #}
 <script type="application/ld+json">
