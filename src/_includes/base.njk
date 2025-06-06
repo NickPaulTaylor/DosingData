@@ -34,6 +34,8 @@
   {# Link your CSS file #}
   <link rel="stylesheet" href="/css/style.css">
 
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
  {# Favicon links #}
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -118,6 +120,17 @@
   
   {# Add the social sharing JavaScript #}
   <script src="/js/social-share.js"></script>
+  <script>
+    // Initialize reCAPTCHA when page loads
+    window.onload = function() {
+      // Check if reCAPTCHA is available and the container exists
+      if (typeof grecaptcha !== 'undefined' && document.getElementById('recapDiv')) {
+        grecaptcha.render('recapDiv', {
+          'sitekey': '6LdNeDUUAAAAAG5l7cJfv1AA5OKLslkrOa_xXxLs'
+        });
+      }
+    };
+  </script>
 
 </body>
 </html>
