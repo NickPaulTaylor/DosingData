@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biotech IPO Monthly Timeline</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f8f9fa;
+            padding: 24px;
+        }
+        
+        .chart-container {
+            background: #FFFFFF;
+            border: 1px solid #f2f2f2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+        
+        .chart-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1c2b3a;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .chart-subtitle {
+            font-size: 14px;
+            font-weight: 400;
+            color: #6c7680;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .axis-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #2c3e50;
+            fill: #2c3e50;
+        }
+        
+        .tick text {
+            font-size: 12px;
+            font-weight: 400;
+            color: #6c7680;
+            fill: #6c7680;
+        }
+        
+        .grid-line {
+            stroke: #f2f2f2;
+            stroke-width: 1px;
+        }
+        
+        .domain {
+            stroke: #f2f2f2;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: #1c2b3a;
+            color: #FFFFFF;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 250ms ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .bar {
+            transition: opacity 250ms ease;
+        }
+        
+        .bar:hover {
+            opacity: 0.8;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #2c3e50;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+        }
+
+       /* Mobile-specific styles */
+.mobile-scroll-container {
+    display: block;
+}
+
+.scroll-indicator {
+    display: none;
+    text-align: center;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #6c7680;
+}
+
+@media (max-width: 768px) {
+    .chart-title { font-size: 20px; }
+    .chart-subtitle { font-size: 12px; }
+    .axis-label { font-size: 12px; }
+    .tick text { font-size: 10px; }
+    body { padding: 16px; }
+    .chart-container { 
+        padding: 16px; 
+        overflow-x: auto;
+    }
+
+    .mobile-scroll-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .scroll-indicator {
+        display: block;
+    }
+
+    #timeline-chart {
+        min-width: 800px;
+    }
+}
+        
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <h1 class="chart-title">Biotech IPO Boom & Bust Cycle</h1>
+        <p class="chart-subtitle">Monthly IPO count and total proceeds (April 2020 - March 2022)</p>
+        <div class="mobile-scroll-container">
+            <svg id="timeline-chart"></svg>
+        </div>
+        <p class="scroll-indicator">← Swipe to explore timeline →</p>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #3a6d95;"></div>
+                <span>IPO Count</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #5a9d83;"></div>
+                <span>Total Proceeds ($M)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        async function loadFullData() {
+    try {
+        // Fetch data from JSON file
+        const response = await fetch('/_data/biotech-ipos-compact.json');
+        const rawData = await response.json();
+        
+        // Group data by month and aggregate
+        const monthlyGroups = {};
+        
+        rawData.companies.forEach(record => {
+            const date = new Date(record.date);
+            const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+            
+            if (!monthlyGroups[monthKey]) {
+                monthlyGroups[monthKey] = {
+                    count: 0,
+                    totalProceeds: 0,
+                    companies: []
+                };
+            }
+            
+            monthlyGroups[monthKey].count++;
+            monthlyGroups[monthKey].totalProceeds += record.proceeds;
+            monthlyGroups[monthKey].companies.push(record.name);
+        });
+        
+        // Convert to array format expected by the chart
+        return Object.entries(monthlyGroups).map(([month, data]) => ({
+            month,
+            date: new Date(month + "-01"),
+            count: data.count,
+            totalProceeds: data.totalProceeds,
+            companies: data.companies
+        })).sort((a, b) => a.date - b.date);
+        
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+    }
+}
+
+        async function createChart() {
+            const data = await loadFullData();
+            
+            const margin = { top: 20, right: 80, bottom: 60, left: 60 };
+            const containerWidth = window.innerWidth > 768 ? 1000 : Math.max(800, window.innerWidth - 60);
+const width = containerWidth - margin.left - margin.right;
+            const height = 500 - margin.bottom - margin.top;
+
+            // Clear any existing chart
+            d3.select("#timeline-chart").selectAll("*").remove();
+
+            const svg = d3.select("#timeline-chart")
+    .attr("width", containerWidth)  
+    .attr("height", height + margin.top + margin.bottom);
+
+            const g = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // Scales with padding to prevent bars from overlapping axes
+const xExtent = d3.extent(data, d => d.date);
+const timePadding = (xExtent[1] - xExtent[0]) * 0.05; // 5% padding on each side
+const xScale = d3.scaleTime()
+    .domain([
+        new Date(xExtent[0].getTime() - timePadding),
+        new Date(xExtent[1].getTime() + timePadding)
+    ])
+    .range([0, width]);
+
+            const yScaleCount = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.count)])
+                .range([height, 0]);
+
+            const yScaleProceeds = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.totalProceeds)])
+                .range([height, 0]);
+
+            // Create grid lines
+            g.selectAll(".grid-line-y")
+                .data(yScaleCount.ticks(5))
+                .enter()
+                .append("line")
+                .attr("class", "grid-line")
+                .attr("x1", 0)
+                .attr("x2", width)
+                .attr("y1", d => yScaleCount(d))
+                .attr("y2", d => yScaleCount(d));
+
+            // Axes
+            const xAxis = d3.axisBottom(xScale)
+                .tickFormat(d3.timeFormat("%b %Y"))
+                .ticks(d3.timeMonth.every(3));
+
+            const yAxisLeft = d3.axisLeft(yScaleCount);
+            const yAxisRight = d3.axisRight(yScaleProceeds);
+
+            g.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(xAxis)
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-35)");
+
+            g.append("g")
+                .call(yAxisLeft);
+
+            g.append("g")
+                .attr("transform", `translate(${width},0)`)
+                .call(yAxisRight);
+
+            // Axis labels
+            g.append("text")
+                .attr("class", "axis-label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("Number of IPOs");
+
+                g.append("text")
+    .attr("class", "axis-label")
+    .attr("transform", "rotate(-90)")
+    .attr("y", width + margin.right - 15)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "-1em")
+    .style("text-anchor", "middle")
+    .text("Total Proceeds ($M)");
+
+            // Bars for IPO count
+            const barWidth = width / data.length * 0.7;
+            
+            g.selectAll(".bar-count")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => xScale(d.date) - barWidth/2)
+                .attr("y", d => yScaleCount(d.count))
+                .attr("width", barWidth)
+                .attr("height", d => height - yScaleCount(d.count))
+                .attr("fill", "#3a6d95")
+                .attr("opacity", 0.8)
+                .on("mouseover", function(event, d) {
+                    const tooltip = d3.select("#tooltip");
+                    tooltip.style("opacity", 1)
+                        .html(`
+                            <strong>${d3.timeFormat("%B %Y")(d.date)}</strong><br/>
+                            IPOs: ${d.count}<br/>
+                            Total Proceeds: $${d.totalProceeds.toFixed(1)}M<br/>
+                            Avg per IPO: $${(d.totalProceeds/d.count).toFixed(1)}M
+                        `)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function() {
+                    d3.select("#tooltip").style("opacity", 0);
+                });
+
+            // Line for total proceeds
+            const line = d3.line()
+                .x(d => xScale(d.date))
+                .y(d => yScaleProceeds(d.totalProceeds))
+                .curve(d3.curveMonotoneX);
+
+            g.append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("stroke", "#5a9d83")
+                .attr("stroke-width", 3)
+                .attr("d", line);
+
+            // Points on the line
+            g.selectAll(".dot")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("class", "dot")
+                .attr("cx", d => xScale(d.date))
+                .attr("cy", d => yScaleProceeds(d.totalProceeds))
+                .attr("r", 4)
+                .attr("fill", "#5a9d83")
+                .on("mouseover", function(event, d) {
+                    const tooltip = d3.select("#tooltip");
+                    tooltip.style("opacity", 1)
+                        .html(`
+                            <strong>${d3.timeFormat("%B %Y")(d.date)}</strong><br/>
+                            IPOs: ${d.count}<br/>
+                            Total Proceeds: $${d.totalProceeds.toFixed(1)}M<br/>
+                            Avg per IPO: $${(d.totalProceeds/d.count).toFixed(1)}M
+                        `)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function() {
+                    d3.select("#tooltip").style("opacity", 0);
+                });
+        }
+
+        // Initialize chart
+        createChart();
+
+        // Responsive resize
+        window.addEventListener('resize', () => {
+            createChart();
+        });
+    </script>
+</body>
+</html>

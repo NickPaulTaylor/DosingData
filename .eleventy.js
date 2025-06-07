@@ -28,6 +28,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("favicon.ico");
   eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
   eleventyConfig.addPassthroughCopy("public");
+  eleventyConfig.addPassthroughCopy("src/charts/**/*.html");     // For your chart HTML files
+  eleventyConfig.addPassthroughCopy("src/_data/*.json");         // For your JSON data files
 
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 23, 2025)

@@ -1,0 +1,1028 @@
+{
+    "metadata": {
+      "totalIPOs": 169,
+      "totalProceeds": 25762.550265,
+      "dateRange": {
+        "start": 1586214000000,
+        "end": 1648508400000
+      },
+      "generatedAt": "2025-06-07T07:06:45.325Z",
+      "source": "IPO Figures.xlsx"
+    },
+    "companies": [
+      {
+        "name": "Zentalis Pharmaceuticals",
+        "proceeds": 165.2,
+        "price": 18,
+        "date": "2020-04-06T23:00:00.000Z"
+      },
+      {
+        "name": "Keros Therapeutics",
+        "proceeds": 96,
+        "price": 16,
+        "date": "2020-04-12T23:00:00.000Z"
+      },
+      {
+        "name": "ORIC Pharmaceuticals",
+        "proceeds": 120,
+        "price": 16,
+        "date": "2020-04-27T23:00:00.000Z"
+      },
+      {
+        "name": "Lyra Therapeutics",
+        "proceeds": 56,
+        "price": 16,
+        "date": "2020-05-04T23:00:00.000Z"
+      },
+      {
+        "name": "Ayala Pharmaceuticals",
+        "proceeds": 55,
+        "price": 15,
+        "date": "2020-05-11T23:00:00.000Z"
+      },
+      {
+        "name": "ADC Therapeutics SA",
+        "proceeds": 232.67,
+        "price": 19,
+        "date": "2020-05-18T23:00:00.000Z"
+      },
+      {
+        "name": "Pliant Therapeutics",
+        "proceeds": 144,
+        "price": 16,
+        "date": "2020-06-04T23:00:00.000Z"
+      },
+      {
+        "name": "Applied Molecular Transport Inc.",
+        "proceeds": 154,
+        "price": 14,
+        "date": "2020-06-08T23:00:00.000Z"
+      },
+      {
+        "name": "Calliditas Therapeutics AB",
+        "proceeds": 90,
+        "price": 19.5,
+        "date": "2020-06-08T23:00:00.000Z"
+      },
+      {
+        "name": "Legend Biotech Corporation",
+        "proceeds": 423.775,
+        "price": 23,
+        "date": "2020-06-08T23:00:00.000Z"
+      },
+      {
+        "name": "Lantern Pharma",
+        "proceeds": 26.25,
+        "price": 15,
+        "date": "2020-06-14T23:00:00.000Z"
+      },
+      {
+        "name": "Avidity Biosciences",
+        "proceeds": 259.2,
+        "price": 18,
+        "date": "2020-06-15T23:00:00.000Z"
+      },
+      {
+        "name": "Generation Bio Co.",
+        "proceeds": 200,
+        "price": 19,
+        "date": "2020-06-15T23:00:00.000Z"
+      },
+      {
+        "name": "Vaxcyte",
+        "proceeds": 250,
+        "price": 16,
+        "date": "2020-06-15T23:00:00.000Z"
+      },
+      {
+        "name": "Repare Therapeutics Inc.",
+        "proceeds": 220,
+        "price": 20,
+        "date": "2020-06-22T23:00:00.000Z"
+      },
+      {
+        "name": "Forma Therapeutics Holdings",
+        "proceeds": 277.65,
+        "price": 20,
+        "date": "2020-06-22T23:00:00.000Z"
+      },
+      {
+        "name": "Fusion Pharmaceuticals Inc.",
+        "proceeds": 212.5,
+        "price": 17,
+        "date": "2020-06-29T23:00:00.000Z"
+      },
+      {
+        "name": "Akouos",
+        "proceeds": 212.5,
+        "price": 17,
+        "date": "2020-06-29T23:00:00.000Z"
+      },
+      {
+        "name": "PolyPid",
+        "proceeds": 60,
+        "price": 16,
+        "date": "2020-06-29T23:00:00.000Z"
+      },
+      {
+        "name": "Aditx Therapeutics",
+        "proceeds": 11.04,
+        "price": 9,
+        "date": "2020-07-01T23:00:00.000Z"
+      },
+      {
+        "name": "NKarta",
+        "proceeds": 252,
+        "price": 18,
+        "date": "2020-07-13T23:00:00.000Z"
+      },
+      {
+        "name": "Poseida Therapeutics",
+        "proceeds": 224,
+        "price": 16,
+        "date": "2020-07-13T23:00:00.000Z"
+      },
+      {
+        "name": "Inventiva",
+        "proceeds": 107.686958,
+        "price": 14.4,
+        "date": "2020-07-14T23:00:00.000Z"
+      },
+      {
+        "name": "Relay Therapeutics",
+        "proceeds": 400,
+        "price": 20,
+        "date": "2020-07-19T23:00:00.000Z"
+      },
+      {
+        "name": "ALX Oncology",
+        "proceeds": 161.5,
+        "price": 19,
+        "date": "2020-07-20T23:00:00.000Z"
+      },
+      {
+        "name": "Pandion Therapeutics",
+        "proceeds": 135,
+        "price": 18,
+        "date": "2020-07-20T23:00:00.000Z"
+      },
+      {
+        "name": "Annexon",
+        "proceeds": 250.75,
+        "price": 17,
+        "date": "2020-07-27T23:00:00.000Z"
+      },
+      {
+        "name": "Inozyme Pharma",
+        "proceeds": 112,
+        "price": 16,
+        "date": "2020-07-27T23:00:00.000Z"
+      },
+      {
+        "name": "iTeos Therapeutics",
+        "proceeds": 201.14,
+        "price": 19,
+        "date": "2020-07-27T23:00:00.000Z"
+      },
+      {
+        "name": "Nurix Therapeutics",
+        "proceeds": 209,
+        "price": 19,
+        "date": "2020-07-27T23:00:00.000Z"
+      },
+      {
+        "name": "AlloVir",
+        "proceeds": 276.25,
+        "price": 17,
+        "date": "2020-08-02T23:00:00.000Z"
+      },
+      {
+        "name": "Checkmate Pharmaceuticals",
+        "proceeds": 75,
+        "price": 15,
+        "date": "2020-08-10T23:00:00.000Z"
+      },
+      {
+        "name": "Freeline Therapeutics",
+        "proceeds": 158.82,
+        "price": 18,
+        "date": "2020-08-10T23:00:00.000Z"
+      },
+      {
+        "name": "CureVac",
+        "proceeds": 213.33,
+        "price": 16,
+        "date": "2020-08-17T23:00:00.000Z"
+      },
+      {
+        "name": "Harmony Biosciences",
+        "proceeds": 128.37,
+        "price": 24,
+        "date": "2020-08-20T23:00:00.000Z"
+      },
+      {
+        "name": "Inhibrx",
+        "proceeds": 119,
+        "price": 17,
+        "date": "2020-08-20T23:00:00.000Z"
+      },
+      {
+        "name": "Kymera Therapeutics",
+        "proceeds": 173.7,
+        "price": 20,
+        "date": "2020-08-24T23:00:00.000Z"
+      },
+      {
+        "name": "Metacrine",
+        "proceeds": 85.02,
+        "price": 13,
+        "date": "2020-09-17T23:00:00.000Z"
+      },
+      {
+        "name": "Dyne Therapeutics",
+        "proceeds": 232.78,
+        "price": 19,
+        "date": "2020-09-20T23:00:00.000Z"
+      },
+      {
+        "name": "Athira Pharma",
+        "proceeds": 204,
+        "price": 17,
+        "date": "2020-09-21T23:00:00.000Z"
+      },
+      {
+        "name": "COMPASS Pathways",
+        "proceeds": 127.5,
+        "price": 17,
+        "date": "2020-09-21T23:00:00.000Z"
+      },
+      {
+        "name": "Taysha Gene Therapies",
+        "proceeds": 157.39,
+        "price": 20,
+        "date": "2020-09-27T23:00:00.000Z"
+      },
+      {
+        "name": "Graybug Vision",
+        "proceeds": 90,
+        "price": 16,
+        "date": "2020-09-28T23:00:00.000Z"
+      },
+      {
+        "name": "PMV Pharmaceuticals",
+        "proceeds": 211.77,
+        "price": 18,
+        "date": "2020-09-28T23:00:00.000Z"
+      },
+      {
+        "name": "Prelude Therapeutics",
+        "proceeds": 158.18,
+        "price": 19,
+        "date": "2020-09-28T23:00:00.000Z"
+      },
+      {
+        "name": "Orphazyme",
+        "proceeds": 83.777606,
+        "price": 11,
+        "date": "2020-09-30T23:00:00.000Z"
+      },
+      {
+        "name": "C4 Therapeutics",
+        "proceeds": 182.4,
+        "price": 19,
+        "date": "2020-10-05T23:00:00.000Z"
+      },
+      {
+        "name": "Immunome",
+        "proceeds": 39,
+        "price": 12,
+        "date": "2020-10-05T23:00:00.000Z"
+      },
+      {
+        "name": "Oncorus",
+        "proceeds": 87,
+        "price": 15,
+        "date": "2020-10-05T23:00:00.000Z"
+      },
+      {
+        "name": "Kronos Bio",
+        "proceeds": 250,
+        "price": 19,
+        "date": "2020-10-13T23:00:00.000Z"
+      },
+      {
+        "name": "Shattuck Labs",
+        "proceeds": 202,
+        "price": 17,
+        "date": "2020-10-13T23:00:00.000Z"
+      },
+      {
+        "name": "Spruce Biosciences",
+        "proceeds": 90,
+        "price": 15,
+        "date": "2020-10-13T23:00:00.000Z"
+      },
+      {
+        "name": "Codiak Biosciences",
+        "proceeds": 82.5,
+        "price": 15,
+        "date": "2020-10-15T23:00:00.000Z"
+      },
+      {
+        "name": "Aligos Therapeutics",
+        "proceeds": 150,
+        "price": 15,
+        "date": "2020-10-19T23:00:00.000Z"
+      },
+      {
+        "name": "Kiromic Biopharma",
+        "proceeds": 15,
+        "price": 12,
+        "date": "2020-10-19T23:00:00.000Z"
+      },
+      {
+        "name": "Praxis Precision Medicines",
+        "proceeds": 190,
+        "price": 19,
+        "date": "2020-10-19T23:00:00.000Z"
+      },
+      {
+        "name": "Tarsus Pharmaceuticals",
+        "proceeds": 88,
+        "price": 16,
+        "date": "2020-10-19T23:00:00.000Z"
+      },
+      {
+        "name": "Opthea",
+        "proceeds": 128.249991,
+        "price": 13.5,
+        "date": "2020-10-19T23:00:00.000Z"
+      },
+      {
+        "name": "Foghorn Therapeutics",
+        "proceeds": 120,
+        "price": 16,
+        "date": "2020-10-27T00:00:00.000Z"
+      },
+      {
+        "name": "Galecto",
+        "proceeds": 85,
+        "price": 15,
+        "date": "2020-11-02T00:00:00.000Z"
+      },
+      {
+        "name": "Atea Pharmaceuticals",
+        "proceeds": 300,
+        "price": 24,
+        "date": "2020-11-03T00:00:00.000Z"
+      },
+      {
+        "name": "SQZ Biotechnologies",
+        "proceeds": 70.59,
+        "price": 16,
+        "date": "2020-11-03T00:00:00.000Z"
+      },
+      {
+        "name": "Olema Pharmaceuticals",
+        "proceeds": 209,
+        "price": 19,
+        "date": "2020-11-23T00:00:00.000Z"
+      },
+      {
+        "name": "Kinnate Biopharma",
+        "proceeds": 240,
+        "price": 20,
+        "date": "2020-12-07T00:00:00.000Z"
+      },
+      {
+        "name": "Sigilon Therapeutics",
+        "proceeds": 126,
+        "price": 18,
+        "date": "2020-12-08T00:00:00.000Z"
+      },
+      {
+        "name": "Silverback Therapeutics",
+        "proceeds": 241.5,
+        "price": 21,
+        "date": "2020-12-08T00:00:00.000Z"
+      },
+      {
+        "name": "4D Molecular Therapeutics",
+        "proceeds": 193.2,
+        "price": 23,
+        "date": "2020-12-15T00:00:00.000Z"
+      },
+      {
+        "name": "Nanobiotix",
+        "proceeds": 98.55,
+        "price": 13.5,
+        "date": "2020-12-15T00:00:00.000Z"
+      },
+      {
+        "name": "BioAtla",
+        "proceeds": 189,
+        "price": 18,
+        "date": "2020-12-18T00:00:00.000Z"
+      },
+      {
+        "name": "Virios Therapeutics",
+        "proceeds": 30,
+        "price": 10,
+        "date": "2020-12-21T00:00:00.000Z"
+      },
+      {
+        "name": "Cullinan Management (Oncology)",
+        "proceeds": 249.9,
+        "price": 21,
+        "date": "2021-01-12T00:00:00.000Z"
+      },
+      {
+        "name": "Gracell Biotechnologies",
+        "proceeds": 209,
+        "price": 19,
+        "date": "2021-01-12T00:00:00.000Z"
+      },
+      {
+        "name": "Landos Biopharma",
+        "proceeds": 100,
+        "price": 16,
+        "date": "2021-02-08T00:00:00.000Z"
+      },
+      {
+        "name": "Sana Biotechnology",
+        "proceeds": 587.5,
+        "price": 25,
+        "date": "2021-02-08T00:00:00.000Z"
+      },
+      {
+        "name": "Sensei Biotherapeutics",
+        "proceeds": 133,
+        "price": 19,
+        "date": "2021-02-08T00:00:00.000Z"
+      },
+      {
+        "name": "Angion Biomedica",
+        "proceeds": 80,
+        "price": 16,
+        "date": "2021-02-09T00:00:00.000Z"
+      },
+      {
+        "name": "Bolt Biotherapeutics",
+        "proceeds": 230,
+        "price": 20,
+        "date": "2021-02-09T00:00:00.000Z"
+      },
+      {
+        "name": "Immunocore",
+        "proceeds": 258.333296,
+        "price": 26,
+        "date": "2021-02-09T00:00:00.000Z"
+      },
+      {
+        "name": "Pharvaris",
+        "proceeds": 165.41,
+        "price": 20,
+        "date": "2021-02-09T00:00:00.000Z"
+      },
+      {
+        "name": "Terns Pharmaceuticals",
+        "proceeds": 127.5,
+        "price": 17,
+        "date": "2021-02-09T00:00:00.000Z"
+      },
+      {
+        "name": "Evaxion Biotech",
+        "proceeds": 30,
+        "price": 10,
+        "date": "2021-02-09T00:00:00.000Z"
+      },
+      {
+        "name": "Vor Biopharma",
+        "proceeds": 176.9,
+        "price": 18,
+        "date": "2021-02-09T00:00:00.000Z"
+      },
+      {
+        "name": "Biophytis",
+        "proceeds": 20.1,
+        "price": 16.75,
+        "date": "2021-02-09T00:00:00.000Z"
+      },
+      {
+        "name": "Adagene",
+        "proceeds": 139.726,
+        "price": 19,
+        "date": "2021-02-11T00:00:00.000Z"
+      },
+      {
+        "name": "Decibel Therapeutics",
+        "proceeds": 127.12,
+        "price": 18,
+        "date": "2021-02-17T00:00:00.000Z"
+      },
+      {
+        "name": "NexImmune",
+        "proceeds": 110.01,
+        "price": 17,
+        "date": "2021-02-17T00:00:00.000Z"
+      },
+      {
+        "name": "Longboard Pharmaceuticals",
+        "proceeds": 80,
+        "price": 16,
+        "date": "2021-03-16T00:00:00.000Z"
+      },
+      {
+        "name": "Prometheus Biosciences",
+        "proceeds": 190,
+        "price": 19,
+        "date": "2021-03-16T00:00:00.000Z"
+      },
+      {
+        "name": "Gain Therapeutics",
+        "proceeds": 40,
+        "price": 11,
+        "date": "2021-03-22T00:00:00.000Z"
+      },
+      {
+        "name": "Connect Biopharma",
+        "proceeds": 191.25,
+        "price": 17,
+        "date": "2021-03-23T00:00:00.000Z"
+      },
+      {
+        "name": "Finch Therapeutics",
+        "proceeds": 127.5,
+        "price": 17,
+        "date": "2021-03-23T00:00:00.000Z"
+      },
+      {
+        "name": "Instil Bio",
+        "proceeds": 320,
+        "price": 20,
+        "date": "2021-03-23T00:00:00.000Z"
+      },
+      {
+        "name": "LAVA Therapeutics",
+        "proceeds": 100.5,
+        "price": 15,
+        "date": "2021-03-28T23:00:00.000Z"
+      },
+      {
+        "name": "Design Therapeutics",
+        "proceeds": 240,
+        "price": 20,
+        "date": "2021-03-29T23:00:00.000Z"
+      },
+      {
+        "name": "Edgewise Therapeutics",
+        "proceeds": 176,
+        "price": 16,
+        "date": "2021-03-29T23:00:00.000Z"
+      },
+      {
+        "name": "Ikena Oncology",
+        "proceeds": 125,
+        "price": 16,
+        "date": "2021-03-29T23:00:00.000Z"
+      },
+      {
+        "name": "Achilles Therapeutics",
+        "proceeds": 175.5,
+        "price": 18,
+        "date": "2021-04-05T23:00:00.000Z"
+      },
+      {
+        "name": "Reneo Pharmaceuticals",
+        "proceeds": 93.75,
+        "price": 15,
+        "date": "2021-04-12T23:00:00.000Z"
+      },
+      {
+        "name": "VectivBio",
+        "proceeds": 127.5,
+        "price": 17,
+        "date": "2021-04-12T23:00:00.000Z"
+      },
+      {
+        "name": "Biomea Fusion",
+        "proceeds": 153,
+        "price": 17,
+        "date": "2021-04-19T23:00:00.000Z"
+      },
+      {
+        "name": "Recursion Pharmaceuticals",
+        "proceeds": 436.36,
+        "price": 18,
+        "date": "2021-04-19T23:00:00.000Z"
+      },
+      {
+        "name": "Impel NeuroPharma",
+        "proceeds": 80,
+        "price": 15,
+        "date": "2021-04-26T23:00:00.000Z"
+      },
+      {
+        "name": "Impel NeuroPharma (now Impel Pharmaceuticals)",
+        "proceeds": 80,
+        "price": 15,
+        "date": "2021-04-26T23:00:00.000Z"
+      },
+      {
+        "name": "Rain Therapeutics",
+        "proceeds": 125,
+        "price": 17,
+        "date": "2021-04-26T23:00:00.000Z"
+      },
+      {
+        "name": "Vaccitech",
+        "proceeds": 110.5,
+        "price": 17,
+        "date": "2021-05-03T23:00:00.000Z"
+      },
+      {
+        "name": "Werewolf Therapeutics",
+        "proceeds": 120,
+        "price": 16,
+        "date": "2021-05-03T23:00:00.000Z"
+      },
+      {
+        "name": "Valneva",
+        "proceeds": 93.531414,
+        "price": 26.411,
+        "date": "2021-05-09T23:00:00.000Z"
+      },
+      {
+        "name": "Anebulo Pharmaceuticals",
+        "proceeds": 21,
+        "price": 7,
+        "date": "2021-05-10T23:00:00.000Z"
+      },
+      {
+        "name": "Talaris Therapeutics",
+        "proceeds": 150.03,
+        "price": 17,
+        "date": "2021-05-10T23:00:00.000Z"
+      },
+      {
+        "name": "Vera Therapeutics",
+        "proceeds": 47.85,
+        "price": 11,
+        "date": "2021-05-17T23:00:00.000Z"
+      },
+      {
+        "name": "Day One Biopharmaceuticals",
+        "proceeds": 160,
+        "price": 16,
+        "date": "2021-05-31T23:00:00.000Z"
+      },
+      {
+        "name": "Centessa Pharmaceuticals",
+        "proceeds": 330,
+        "price": 20,
+        "date": "2021-06-01T23:00:00.000Z"
+      },
+      {
+        "name": "Janux Therapeutics",
+        "proceeds": 193.8,
+        "price": 17,
+        "date": "2021-06-14T23:00:00.000Z"
+      },
+      {
+        "name": "Alzamend Neuro",
+        "proceeds": 12.5,
+        "price": 5,
+        "date": "2021-06-16T23:00:00.000Z"
+      },
+      {
+        "name": "Molecular Partners",
+        "proceeds": 63.75,
+        "price": 21.25,
+        "date": "2021-06-17T23:00:00.000Z"
+      },
+      {
+        "name": "Lyell Immunopharma",
+        "proceeds": 425,
+        "price": 17,
+        "date": "2021-06-20T23:00:00.000Z"
+      },
+      {
+        "name": "Verve Therapeutics",
+        "proceeds": 266.68,
+        "price": 19,
+        "date": "2021-06-20T23:00:00.000Z"
+      },
+      {
+        "name": "Ambrx Biopharma",
+        "proceeds": 126,
+        "price": 18,
+        "date": "2021-06-21T23:00:00.000Z"
+      },
+      {
+        "name": "atai Life Sciences",
+        "proceeds": 225,
+        "price": 15,
+        "date": "2021-06-21T23:00:00.000Z"
+      },
+      {
+        "name": "Century Therapeutics",
+        "proceeds": 211,
+        "price": 20,
+        "date": "2021-06-21T23:00:00.000Z"
+      },
+      {
+        "name": "Cyteir Therapeutics",
+        "proceeds": 133.2,
+        "price": 18,
+        "date": "2021-06-21T23:00:00.000Z"
+      },
+      {
+        "name": "Monte Rosa Therapeutics",
+        "proceeds": 222.3,
+        "price": 19,
+        "date": "2021-06-27T23:00:00.000Z"
+      },
+      {
+        "name": "Acurx Pharmaceuticals",
+        "proceeds": 15,
+        "price": 6,
+        "date": "2021-06-28T23:00:00.000Z"
+      },
+      {
+        "name": "Elevation Oncology",
+        "proceeds": 100,
+        "price": 16,
+        "date": "2021-06-28T23:00:00.000Z"
+      },
+      {
+        "name": "GH Research",
+        "proceeds": 160,
+        "price": 16,
+        "date": "2021-06-28T23:00:00.000Z"
+      },
+      {
+        "name": "Graphite Bio",
+        "proceeds": 238,
+        "price": 17,
+        "date": "2021-06-28T23:00:00.000Z"
+      },
+      {
+        "name": "Aerovate Therapeutics",
+        "proceeds": 121.55,
+        "price": 14,
+        "date": "2021-07-01T23:00:00.000Z"
+      },
+      {
+        "name": "Acumen Pharmaceuticals",
+        "proceeds": 160,
+        "price": 16,
+        "date": "2021-07-05T23:00:00.000Z"
+      },
+      {
+        "name": "TransCode Therapeutics",
+        "proceeds": 25,
+        "price": 4,
+        "date": "2021-07-12T23:00:00.000Z"
+      },
+      {
+        "name": "Erasca",
+        "proceeds": 300,
+        "price": 16,
+        "date": "2021-07-19T23:00:00.000Z"
+      },
+      {
+        "name": "Imago BioSciences",
+        "proceeds": 134.4,
+        "price": 16,
+        "date": "2021-07-19T23:00:00.000Z"
+      },
+      {
+        "name": "TScan Therapeutics",
+        "proceeds": 100,
+        "price": 15,
+        "date": "2021-07-19T23:00:00.000Z"
+      },
+      {
+        "name": "HCW Biologics",
+        "proceeds": 56,
+        "price": 8,
+        "date": "2021-07-21T23:00:00.000Z"
+      },
+      {
+        "name": "Absci",
+        "proceeds": 200,
+        "price": 16,
+        "date": "2021-07-25T23:00:00.000Z"
+      },
+      {
+        "name": "Caribou Biosciences",
+        "proceeds": 304,
+        "price": 16,
+        "date": "2021-07-26T23:00:00.000Z"
+      },
+      {
+        "name": "Candel Therapeutics",
+        "proceeds": 72,
+        "price": 8,
+        "date": "2021-07-28T23:00:00.000Z"
+      },
+      {
+        "name": "Icosavax",
+        "proceeds": 182,
+        "price": 15,
+        "date": "2021-08-01T23:00:00.000Z"
+      },
+      {
+        "name": "Nuvalent",
+        "proceeds": 165.75,
+        "price": 17,
+        "date": "2021-08-01T23:00:00.000Z"
+      },
+      {
+        "name": "Rallybio",
+        "proceeds": 80.6,
+        "price": 13,
+        "date": "2021-08-01T23:00:00.000Z"
+      },
+      {
+        "name": "IN8bio",
+        "proceeds": 40,
+        "price": 10,
+        "date": "2021-08-02T23:00:00.000Z"
+      },
+      {
+        "name": "Immuneering",
+        "proceeds": 112.5,
+        "price": 15,
+        "date": "2021-08-02T23:00:00.000Z"
+      },
+      {
+        "name": "Omega Therapeutics",
+        "proceeds": 125.8,
+        "price": 17,
+        "date": "2021-08-02T23:00:00.000Z"
+      },
+      {
+        "name": "Rani Therapeutics",
+        "proceeds": 73.33,
+        "price": 11,
+        "date": "2021-08-02T23:00:00.000Z"
+      },
+      {
+        "name": "Tenaya Therapeutics",
+        "proceeds": 180,
+        "price": 15,
+        "date": "2021-08-02T23:00:00.000Z"
+      },
+      {
+        "name": "Adagio Therapeutics",
+        "proceeds": 309.4,
+        "price": 17,
+        "date": "2021-08-09T23:00:00.000Z"
+      },
+      {
+        "name": "Eliem Therapeutics",
+        "proceeds": 80,
+        "price": 12.5,
+        "date": "2021-08-11T23:00:00.000Z"
+      },
+      {
+        "name": "Dermata Therapeutics",
+        "proceeds": 18,
+        "price": 7,
+        "date": "2021-08-16T23:00:00.000Z"
+      },
+      {
+        "name": "Dice Therapeutics",
+        "proceeds": 204,
+        "price": 17,
+        "date": "2021-09-16T23:00:00.000Z"
+      },
+      {
+        "name": "Tyra Biosciences",
+        "proceeds": 172.8,
+        "price": 16,
+        "date": "2021-09-16T23:00:00.000Z"
+      },
+      {
+        "name": "Exscientia",
+        "proceeds": 304.7,
+        "price": 22,
+        "date": "2021-10-04T23:00:00.000Z"
+      },
+      {
+        "name": "Theseus Pharmaceuticals",
+        "proceeds": 160,
+        "price": 16,
+        "date": "2021-10-11T23:00:00.000Z"
+      },
+      {
+        "name": "Cognition Therapeutics",
+        "proceeds": 45.22,
+        "price": 12,
+        "date": "2021-10-12T23:00:00.000Z"
+      },
+      {
+        "name": "Pyxis Oncology",
+        "proceeds": 168,
+        "price": 16,
+        "date": "2021-10-12T23:00:00.000Z"
+      },
+      {
+        "name": "Context Therapeutics",
+        "proceeds": 25,
+        "price": 5,
+        "date": "2021-10-21T23:00:00.000Z"
+      },
+      {
+        "name": "Ventyx Biosciences",
+        "proceeds": 151.56,
+        "price": 16,
+        "date": "2021-10-24T23:00:00.000Z"
+      },
+      {
+        "name": "Xilio Therapeutics",
+        "proceeds": 117.65,
+        "price": 16,
+        "date": "2021-10-25T23:00:00.000Z"
+      },
+      {
+        "name": "Aura Biosciences",
+        "proceeds": 75.6,
+        "price": 14,
+        "date": "2021-11-02T00:00:00.000Z"
+      },
+      {
+        "name": "LianBio",
+        "proceeds": 325,
+        "price": 16,
+        "date": "2021-11-03T00:00:00.000Z"
+      },
+      {
+        "name": "IO Biotech",
+        "proceeds": 100.1,
+        "price": 14,
+        "date": "2021-11-09T00:00:00.000Z"
+      },
+      {
+        "name": "Vaxxinity",
+        "proceeds": 78,
+        "price": 13,
+        "date": "2021-11-15T00:00:00.000Z"
+      },
+      {
+        "name": "Cincor Pharma",
+        "proceeds": 193.6,
+        "price": 16,
+        "date": "2022-01-11T00:00:00.000Z"
+      },
+      {
+        "name": "Amylyx Pharmaceuticals",
+        "proceeds": 190,
+        "price": 19,
+        "date": "2022-01-11T00:00:00.000Z"
+      },
+      {
+        "name": "Vigil Neuro",
+        "proceeds": 98,
+        "price": 14,
+        "date": "2022-01-11T00:00:00.000Z"
+      },
+      {
+        "name": "Hillstream BioPharma",
+        "proceeds": 15,
+        "price": 4,
+        "date": "2022-01-14T00:00:00.000Z"
+      },
+      {
+        "name": "Nuvectis Pharma",
+        "proceeds": 16,
+        "price": 5,
+        "date": "2022-02-08T00:00:00.000Z"
+      },
+      {
+        "name": "Arcellx",
+        "proceeds": 123.75,
+        "price": 15,
+        "date": "2022-02-08T00:00:00.000Z"
+      },
+      {
+        "name": "TC Biopharm",
+        "proceeds": 17.5,
+        "price": 4.24,
+        "date": "2022-02-15T00:00:00.000Z"
+      },
+      {
+        "name": "Blue Water Vaccines",
+        "proceeds": 20,
+        "price": 9,
+        "date": "2022-02-23T00:00:00.000Z"
+      },
+      {
+        "name": "AN2 Therapeutics",
+        "proceeds": 69,
+        "price": 15,
+        "date": "2022-03-28T23:00:00.000Z"
+      }
+    ]
+  }
