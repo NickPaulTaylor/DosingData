@@ -270,6 +270,122 @@ hr.hero-separator {
   padding-bottom: calc(var(--spacing-unit) * 1);
 }
 
+/* ========================================================== */
+/* Breakout Content Layout System                            */
+/* ========================================================== */
+
+/* Create different container sizes for content */
+.content-narrow {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.content-medium {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.content-wide {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.content-full {
+  max-width: 100vw;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+/* Breakout classes for content within articles */
+.breakout-medium {
+  width: 100vw;
+  max-width: 950px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.breakout-wide {
+  width: 100vw;
+  max-width: 1200px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.breakout-full {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* Enhanced visualization container */
+.visualization-container {
+  margin: calc(var(--spacing-unit) * 2.5) 0;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.visualization-container.breakout-medium,
+.visualization-container.breakout-wide {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--color-light-gray);
+}
+
+.visualization-container.breakout-full {
+  border-radius: 0;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+}
+
+/* Update existing dosing-data-graph to work with breakout */
+.dosing-data-graph.breakout-wide {
+  background-color: #f9f9f9;
+  padding: calc(var(--spacing-unit) * 2);
+  border: 1px solid var(--color-light-gray);
+  margin: 0; /* Remove default margins when used with breakout */
+}
+
+/* Caption styling for wide content */
+.breakout-caption {
+  font-size: 0.9em;
+  color: var(--color-text-light);
+  text-align: center;
+  margin-top: 1rem;
+  font-style: italic;
+  padding: 0 1.5rem;
+}
+
+/* Responsive behavior for breakout content */
+@media (max-width: 768px) {
+  .breakout-medium,
+  .breakout-wide,
+  .breakout-full {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    padding: 0 1rem;
+  }
+  
+  .content-medium,
+  .content-wide {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .breakout-caption {
+    padding: 0 1rem;
+  }
+}
+
 /* --- Graph Styling --- */
 .dosing-data-graph {
   margin-top: calc(var(--spacing-unit) * 2);

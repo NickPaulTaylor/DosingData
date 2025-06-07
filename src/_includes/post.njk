@@ -150,7 +150,8 @@
 {% endblock %}
 
 {% block content %}
-<article class="container post-content">
+<div class="container">
+  <article class="post-content">
     <h1>{{ title }}</h1>
     <div class="post-meta">
         <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
@@ -219,4 +220,5 @@
     {% include "components/newsletter-form.njk" %}
 
 </article>
+</div>    
 {% endblock %}
