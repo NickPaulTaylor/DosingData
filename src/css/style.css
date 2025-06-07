@@ -229,7 +229,7 @@ hr.hero-separator {
 
 /* --- Single Post Content --- */
 .post-content {
-  max-width: 750px;
+  max-width: 850px;
   margin: calc(var(--spacing-unit) * 3) auto;
   font-size: 1.2em;
   line-height: 1.7;
