@@ -17,9 +17,9 @@ export class BiotechIPODonutChart {
         };
         
         this.config = {
-            margin: { top: 20, right: 40, bottom: 20, left: 40 },
+            margin: { top: 10, right: 40, bottom: 20, left: 40 }, // Reduced top margin
             width: 800,
-            height: 500,
+            height: 450, // Reduced height to compensate for reduced margin
             innerRadius: 80,
             outerRadius: 150,
             ...storyConfig.chartConfig
@@ -114,12 +114,12 @@ export class BiotechIPODonutChart {
         // Adjust dimensions for responsive design
         if (isMobile) {
             this.config.width = Math.min(containerWidth - 40, 350);
-            this.config.height = 350;
+            this.config.height = 300; // Reduced mobile height
             this.config.outerRadius = 100;
             this.config.innerRadius = 50;
         } else if (isTablet) {
             this.config.width = Math.min(containerWidth - 40, 500);
-            this.config.height = 400;
+            this.config.height = 350; // Reduced tablet height
             this.config.outerRadius = 130;
             this.config.innerRadius = 65;
         } else {
@@ -136,8 +136,9 @@ export class BiotechIPODonutChart {
             .attr("tabindex", "0")
             .style("max-width", "100%");
 
+        // Position chart group closer to top
         this.chartGroup = this.svg.append("g")
-            .attr("transform", `translate(${this.config.width / 2}, ${this.config.height / 2})`);
+            .attr("transform", `translate(${this.config.width / 2}, ${this.config.height / 2 - 10})`);
 
         this.setupErrorHandling();
     }
@@ -176,7 +177,6 @@ export class BiotechIPODonutChart {
             .append("div")
             .attr("class", "tooltip biotech-tooltip")
             .style("position", "absolute")
-            .style("background", this.colors.primary || "#1c2b3a")
             .style("color", "white")
             .style("padding", "12px")
             .style("border-radius", "8px")
@@ -197,7 +197,7 @@ export class BiotechIPODonutChart {
                 this.drawChart();
                 this.addInteractions();
                 this.addAnnotations();
-                this.addLegend();
+                // Removed addLegend() call
                 this.enhanceAccessibility();
                 this.validateRenderQuality();
             })
@@ -260,7 +260,7 @@ export class BiotechIPODonutChart {
                     .attr("d", self.hoverArc)
                     .attr("fill", d.data.colorValue);
                 
-                // Show tooltip
+                // Show tooltip with segment color
                 self.showTooltip(event, d);
             })
             .on("mousemove", function(event) {
@@ -297,7 +297,9 @@ export class BiotechIPODonutChart {
             });
         }
 
+        // Set tooltip background to match segment color
         this.tooltip
+            .style("background", d.data.colorValue)
             .html(tooltipHTML)
             .transition()
             .duration(200)
@@ -333,8 +335,6 @@ export class BiotechIPODonutChart {
             .style("opacity", 0);
     }
 
-
-
     addAnnotations() {
         const containerWidth = d3.select(this.containerId).node().getBoundingClientRect().width;
         const isMobile = containerWidth < 480;
@@ -354,6 +354,12 @@ export class BiotechIPODonutChart {
         const acquiredSegment = this.pieData.find(d => d.data.category === "Acquired");
         if (acquiredSegment) {
             this.addAnnotation(acquiredSegment, "1 in 7 acquired", 1.3);
+        }
+
+        // Annotation for "Distressed" segment
+        const distressedSegment = this.pieData.find(d => d.data.category === "Distressed");
+        if (distressedSegment) {
+            this.addAnnotation(distressedSegment, "1 in 7 distressed", 1.3);
         }
     }
 
@@ -390,36 +396,7 @@ export class BiotechIPODonutChart {
             .text(text);
     }
 
-    addLegend() {
-        const containerWidth = d3.select(this.containerId).node().getBoundingClientRect().width;
-        const isMobile = containerWidth < 480;
-        
-        // Position legend responsively
-        const legendX = isMobile ? 20 : 30;
-        const legendY = this.config.height - (isMobile ? 60 : 80);
-
-        const legendGroup = this.svg.append("g")
-            .attr("class", "legend")
-            .attr("transform", `translate(${legendX}, ${legendY})`);
-
-        this.data.forEach((d, i) => {
-            const legendItem = legendGroup.append("g")
-                .attr("transform", `translate(0, ${i * (isMobile ? 18 : 20)})`);
-
-            legendItem.append("rect")
-                .attr("width", isMobile ? 12 : 15)
-                .attr("height", isMobile ? 12 : 15)
-                .attr("fill", d.colorValue);
-
-            legendItem.append("text")
-                .attr("x", isMobile ? 16 : 20)
-                .attr("y", isMobile ? 10 : 12)
-                .style("font-size", isMobile ? "12px" : "14px")
-                .style("font-weight", "400")
-                .style("fill", this.colors.primary)
-                .text(`${d.category} (${d.percentage.toFixed(1)}%)`);
-        });
-    }
+    // Removed addLegend() method entirely
 
     addKeyboardNavigation() {
         let currentIndex = 0;
@@ -504,11 +481,8 @@ export class BiotechIPODonutChart {
     }
 
     validateRenderQuality() {
-        // Validate story elements are present
-        const legend = this.svg.selectAll('.legend');
-        
+        // Validate story elements are present (removed legend check)
         console.assert(this.arcs.size() === 3, '❌ Expected 3 chart segments');
-        console.assert(legend.size() > 0, '❌ Legend missing');
         
         console.log('✅ Chart quality validation passed');
     }
