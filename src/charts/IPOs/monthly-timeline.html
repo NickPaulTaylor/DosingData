@@ -6,6 +6,28 @@
     <title>Biotech IPO Monthly Timeline</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <style>
+        /* CSS Variables - Accessibility-First Color System */
+        :root {
+            /* Primary Brand Colors */
+            --primary: #1c2b3a;           /* Dark blue-gray - titles, main text */
+            --secondary: #3a6d95;         /* Medium blue - primary data series */
+            --accent: #5a9d83;            /* Muted green - interactive elements */
+            --background: #FFFFFF;        /* Chart backgrounds */
+            --light-gray: #f2f2f2;        /* Grid lines, borders */
+            
+            /* Text Colors */
+            --main-text: #2c3e50;         /* Chart labels */
+            --light-text: #6c7680;        /* Axis labels, secondary info */
+            --hover-bg: #e9f0f5;          /* Tooltip backgrounds */
+            
+            /* Semantic Data Colors - ACCESSIBILITY-FIRST */
+            --data-primary: #3a6d95;      /* Main data series (blue) */
+            --data-secondary: #d97706;    /* Comparison data (accessible orange) */
+            --data-hover: #5a9d83;        /* Interactive states (green) */
+            --data-tertiary: #2d7a2d;     /* Additional series (darker green) */
+            --data-quaternary: #6c7680;   /* Supporting data (gray) */
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -27,7 +49,7 @@
         .chart-title {
             font-size: 24px;
             font-weight: 700;
-            color: #1c2b3a;
+            color: var(--primary);
             margin-bottom: 8px;
             text-align: center;
         }
@@ -35,7 +57,7 @@
         .chart-subtitle {
             font-size: 14px;
             font-weight: 400;
-            color: #6c7680;
+            color: var(--light-text);
             text-align: center;
             margin-bottom: 32px;
         }
@@ -43,30 +65,30 @@
         .axis-label {
             font-size: 14px;
             font-weight: 400;
-            color: #2c3e50;
-            fill: #2c3e50;
+            color: var(--main-text);
+            fill: var(--main-text);
         }
         
         .tick text {
             font-size: 12px;
             font-weight: 400;
-            color: #6c7680;
-            fill: #6c7680;
+            color: var(--light-text);
+            fill: var(--light-text);
         }
         
         .grid-line {
-            stroke: #f2f2f2;
+            stroke: var(--light-gray);
             stroke-width: 1px;
         }
         
         .domain {
-            stroke: #f2f2f2;
+            stroke: var(--light-gray);
         }
         
         .tooltip {
             position: absolute;
-            background: #1c2b3a;
-            color: #FFFFFF;
+            background: var(--primary);
+            color: var(--background);
             padding: 12px;
             border-radius: 8px;
             font-size: 14px;
@@ -77,11 +99,7 @@
         }
         
         .bar {
-            transition: opacity 250ms ease;
-        }
-        
-        .bar:hover {
-            opacity: 0.8;
+            transition: all 250ms ease;
         }
         
         .legend {
@@ -90,7 +108,7 @@
             gap: 24px;
             margin-top: 16px;
             font-size: 13px;
-            color: #2c3e50;
+            color: var(--main-text);
         }
         
         .legend-item {
@@ -105,43 +123,43 @@
             border-radius: 2px;
         }
 
-       /* Mobile-specific styles */
-.mobile-scroll-container {
-    display: block;
-}
+        /* Mobile-specific styles */
+        .mobile-scroll-container {
+            display: block;
+        }
 
-.scroll-indicator {
-    display: none;
-    text-align: center;
-    margin-top: 12px;
-    font-size: 12px;
-    color: #6c7680;
-}
+        .scroll-indicator {
+            display: none;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--light-text);
+        }
 
-@media (max-width: 768px) {
-    .chart-title { font-size: 20px; }
-    .chart-subtitle { font-size: 12px; }
-    .axis-label { font-size: 12px; }
-    .tick text { font-size: 10px; }
-    body { padding: 16px; }
-    .chart-container { 
-        padding: 0; 
-        overflow-x: auto;
-    }
+        @media (max-width: 768px) {
+            .chart-title { font-size: 20px; }
+            .chart-subtitle { font-size: 12px; }
+            .axis-label { font-size: 12px; }
+            .tick text { font-size: 10px; }
+            body { padding: 16px; }
+            .chart-container { 
+                padding: 0; 
+                overflow-x: auto;
+            }
 
-    .mobile-scroll-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+            .mobile-scroll-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
 
-    .scroll-indicator {
-        display: block;
-    }
+            .scroll-indicator {
+                display: block;
+            }
 
-    #timeline-chart {
-        min-width: 800px;
-    }
-}
+            #timeline-chart {
+                min-width: 800px;
+            }
+        }
         
     </style>
 </head>
@@ -155,11 +173,11 @@
         <p class="scroll-indicator">← Swipe to explore timeline →</p>
         <div class="legend">
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #3a6d95;"></div>
+                <div class="legend-color" id="legend-primary"></div>
                 <span>IPO Count</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #5a9d83;"></div>
+                <div class="legend-color" id="legend-secondary"></div>
                 <span>Total Proceeds ($M)</span>
             </div>
         </div>
@@ -169,6 +187,31 @@
 
     <script>
         console.log('Script loaded successfully');
+        
+        // REQUIRED: Standard chartColors JavaScript pattern
+        function initializeChartColors() {
+            const chartColors = {
+                primary: getComputedStyle(document.documentElement).getPropertyValue('--data-primary').trim(),
+                secondary: getComputedStyle(document.documentElement).getPropertyValue('--data-secondary').trim(),
+                hover: getComputedStyle(document.documentElement).getPropertyValue('--data-hover').trim(),
+                tertiary: getComputedStyle(document.documentElement).getPropertyValue('--data-tertiary').trim(),
+                quaternary: getComputedStyle(document.documentElement).getPropertyValue('--data-quaternary').trim()
+            };
+            
+            // Validation: Ensure colors loaded properly
+            if (!chartColors.primary || !chartColors.secondary) {
+                console.error('Chart colors not loaded properly');
+                console.log('Available CSS variables:', Object.keys(chartColors));
+            } else {
+                console.log('Chart colors initialized successfully:', chartColors);
+            }
+            
+            // Update legend colors dynamically
+            document.getElementById('legend-primary').style.backgroundColor = chartColors.primary;
+            document.getElementById('legend-secondary').style.backgroundColor = chartColors.secondary;
+            
+            return chartColors;
+        }
         
         async function loadFullData() {
             console.log('loadFullData called');
@@ -222,6 +265,9 @@
             console.log('createChart called');
             
             try {
+                // Initialize colors first
+                const colors = initializeChartColors();
+                
                 console.log('About to call loadFullData');
                 const data = await loadFullData();
                 console.log('Data loaded:', data.length, 'months');
@@ -320,7 +366,7 @@
                     .style("text-anchor", "middle")
                     .text("Total Proceeds ($M)");
 
-                // Bars for IPO count
+                // Bars for IPO count - Using PRIMARY color (blue)
                 const barWidth = width / data.length * 0.7;
                 
                 g.selectAll(".bar-count")
@@ -332,9 +378,12 @@
                     .attr("y", d => yScaleCount(d.count))
                     .attr("width", barWidth)
                     .attr("height", d => height - yScaleCount(d.count))
-                    .attr("fill", "#3a6d95")
+                    .attr("fill", colors.primary)  // Using semantic color variable
                     .attr("opacity", 0.8)
                     .on("mouseover", function(event, d) {
+                        // Use HOVER color for interactive state
+                        d3.select(this).attr("fill", colors.hover);
+                        
                         const tooltip = d3.select("#tooltip");
                         tooltip.style("opacity", 1)
                             .html(`
@@ -347,10 +396,12 @@
                             .style("top", (event.pageY - 28) + "px");
                     })
                     .on("mouseout", function() {
+                        // Return to PRIMARY color
+                        d3.select(this).attr("fill", colors.primary);
                         d3.select("#tooltip").style("opacity", 0);
                     });
 
-                // Line for total proceeds
+                // Line for total proceeds - Using SECONDARY color (orange) for comparison
                 const line = d3.line()
                     .x(d => xScale(d.date))
                     .y(d => yScaleProceeds(d.totalProceeds))
@@ -359,11 +410,11 @@
                 g.append("path")
                     .datum(data)
                     .attr("fill", "none")
-                    .attr("stroke", "#5a9d83")
+                    .attr("stroke", colors.secondary)  // Using secondary color for comparison data
                     .attr("stroke-width", 3)
                     .attr("d", line);
 
-                // Points on the line
+                // Points on the line - Using SECONDARY color (orange)
                 g.selectAll(".dot")
                     .data(data)
                     .enter()
@@ -372,8 +423,11 @@
                     .attr("cx", d => xScale(d.date))
                     .attr("cy", d => yScaleProceeds(d.totalProceeds))
                     .attr("r", 4)
-                    .attr("fill", "#5a9d83")
+                    .attr("fill", colors.secondary)  // Using secondary color
                     .on("mouseover", function(event, d) {
+                        // Use HOVER color for interactive state
+                        d3.select(this).attr("fill", colors.hover);
+                        
                         const tooltip = d3.select("#tooltip");
                         tooltip.style("opacity", 1)
                             .html(`
@@ -386,10 +440,12 @@
                             .style("top", (event.pageY - 28) + "px");
                     })
                     .on("mouseout", function() {
+                        // Return to SECONDARY color
+                        d3.select(this).attr("fill", colors.secondary);
                         d3.select("#tooltip").style("opacity", 0);
                     });
                     
-                console.log('Chart created successfully');
+                console.log('Chart created successfully with accessibility-first colors');
                 
             } catch (error) {
                 console.error('Error in createChart:', error);

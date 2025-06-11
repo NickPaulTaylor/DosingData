@@ -2,11 +2,38 @@
 :root {
   --color-primary: #1c2b3a;    /* Darker Blue-Gray for better contrast */
   --color-secondary: #3a6d95; /* Slightly deeper Medium Blue */
-  --color-accent: #5a9d83;    /* More vibrant Muted Green */
+  --color-accent: #d97706; 
+  --color-accent-green: #5a9d83;    /* More vibrant Muted Green */
   --color-background: #FFFFFF; /* White */
   --color-light-gray: #f2f2f2; /* Slightly darker Light Gray for better visibility */
   --color-text: #2c3e50;     /* Refined text color */
   --color-text-light: #6c7680; /* More accessible light text */
+
+  /* === DATA VISUALIZATION COLOR HIERARCHY === */
+  /* Use these semantic variables for charts and graphs */
+  
+  /* Primary data series - your signature blue */
+  --data-primary: #3a6d95;
+  
+  /* Secondary data series - accessible orange for comparisons */
+  --data-secondary: #d97706;
+  
+  /* Additional data series (use sparingly) */
+  --data-tertiary: #2d7a2d;      /* Darker green alternative */
+  --data-quaternary: #6c7680;    /* Neutral gray */
+  
+  /* Interactive data visualization elements */
+  --data-hover: #5a9d83;         /* Green for hover states */
+  --data-selection: #5a9d83;     /* Green for selections */
+  --data-highlight: #5a9d83;     /* Green for callouts */
+  
+  /* Usage Guidelines:
+     --data-primary: Main data series, single-series charts, most important story
+     --data-secondary: Direct comparisons, secondary series, benchmarks
+     --data-hover: Hover effects, tooltips, interactive states
+     --data-selection: Selected states, user interactions
+     --data-highlight: Annotations, callouts, emphasis (non-data)
+  */
   
   /* New variables for enhanced design system */
   --color-hover: #e9f0f5;     /* Subtle hover state background */
@@ -1072,4 +1099,79 @@ button:focus {
   border-color: #28a745;
   background-color: #f8fff9;
 }
+:root {
+  /* Accessibility-First Color System */
+  --primary: #1c2b3a;
+  --secondary: #3a6d95;
+  --background: #FFFFFF;
+  --light-gray: #f2f2f2;
+  --data-primary: #3a6d95;
+  --data-secondary: #d97706;
+  --data-hover: #5a9d83;
+  --data-tertiary: #2d7a2d;
+  --data-quaternary: #6c7680;
+  --main-text: #2c3e50;
+  --light-text: #6c7680;
+  --hover-bg: #e9f0f5;
+  --spacing-unit: 16px;
+  --border-radius: 8px;
+}
+
+/* Container Styles */
+.visualization-container {
+  margin: calc(var(--spacing-unit) * 2.5) auto;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: transparent;
+  max-width: 950px;
+}
+
+.visualization-container.breakout-medium {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--light-gray);
+  background-color: #f9f9f9;
+  padding: calc(var(--spacing-unit) * 2);
+  border-left: 4px solid var(--data-primary);
+  background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+}
+
+/* Typography */
+.chart-header h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 8px 0;
+}
+
+.chart-subtitle {
+  font-size: 16px;
+  color: var(--light-text);
+  margin: 0 0 24px 0;
+}
+
+.chart-caption {
+  font-size: 14px;
+  color: var(--light-text);
+  margin: 16px 0 8px 0;
+  line-height: 1.5;
+}
+
+.data-source {
+  font-size: 12px;
+  color: var(--light-text);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

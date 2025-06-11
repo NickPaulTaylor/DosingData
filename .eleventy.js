@@ -30,6 +30,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("public");
   eleventyConfig.addPassthroughCopy("src/charts/**/*.html");     // For your chart HTML files
   eleventyConfig.addPassthroughCopy("src/_data/*.json");         // For your JSON data files
+  eleventyConfig.addPassthroughCopy("src/_data/**/*.json");
+  eleventyConfig.addPassthroughCopy("src/assets/js/**/*.js");
+  eleventyConfig.addPassthroughCopy("src/_data/raw/*.csv");
 
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 23, 2025)
