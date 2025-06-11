@@ -33,6 +33,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/_data/**/*.json");
   eleventyConfig.addPassthroughCopy("src/assets/js/**/*.js");
   eleventyConfig.addPassthroughCopy("src/_data/raw/*.csv");
+  eleventyConfig.addPassthroughCopy("src/_data/processed/biotech-ipo-outcomes.json");
 
   // --- Custom Filters ---
   // Filter for readable date (e.g., Apr 23, 2025)

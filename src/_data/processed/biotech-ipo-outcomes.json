@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "sourceFile": "biotech-ipo-data.csv",
+    "processedDate": "2025-06-11T13:28:58.983Z",
+    "totalRecords": 168,
+    "dataRange": null,
+    "columns": ["Company", "Status"],
+    "description": "Analysis of 168 biotech companies that completed IPOs and their current status",
+    "statusBreakdown": {
+      "Listed": 122,
+      "Acquired": 23,
+      "Reverse Merged": 10,
+      "Liquidated": 5,
+      "Bankrupt": 4,
+      "OTC Trading": 4
+    },
+    "strategicBreakdown": {
+      "Still Independent": 122,
+      "Acquired": 23,
+      "Distressed": 23
+    }
+  },
+  "companies": [],
+  "strategicData": [
+    {
+      "category": "Still Independent",
+      "subcategories": ["Listed"],
+      "count": 122,
+      "percentage": 72.6,
+      "color": "primary",
+      "description": "Companies that remain listed and independent",
+      "companies": []
+    },
+    {
+      "category": "Acquired",
+      "subcategories": ["Acquired"],
+      "count": 23,
+      "percentage": 13.7,
+      "color": "hover",
+      "description": "Companies acquired by other firms",
+      "companies": []
+    },
+    {
+      "category": "Distressed",
+      "subcategories": ["Reverse Merged", "Liquidated", "Bankrupt", "OTC Trading"],
+      "count": 23,
+      "percentage": 13.7,
+      "color": "secondary",
+      "description": "Companies experiencing various forms of distress",
+      "breakdown": {
+        "Reverse Merged": 10,
+        "Liquidated": 5,
+        "Bankrupt": 4,
+        "OTC Trading": 4
+      },
+      "companies": []
+    }
+  ]
+}

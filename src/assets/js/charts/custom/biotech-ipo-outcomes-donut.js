@@ -184,7 +184,6 @@ export class BiotechIPODonutChart {
             .style("font-weight", "400")
             .style("pointer-events", "none")
             .style("z-index", "1000")
-            .style("box-shadow", "0 4px 12px rgba(0, 0, 0, 0.15)")
             .style("max-width", "250px")
             .style("line-height", "1.4")
             .style("opacity", 0);
@@ -254,11 +253,12 @@ export class BiotechIPODonutChart {
 
         this.arcs
             .on("mouseover", function(event, d) {
-                // Visual feedback
+                // Visual feedback with matching color
                 d3.select(this)
                     .transition()
                     .duration(200)
-                    .attr("d", self.hoverArc);
+                    .attr("d", self.hoverArc)
+                    .attr("fill", d.data.colorValue);
                 
                 // Show tooltip
                 self.showTooltip(event, d);
@@ -267,11 +267,12 @@ export class BiotechIPODonutChart {
                 self.moveTooltip(event);
             })
             .on("mouseout", function(event, d) {
-                // Reset visual
+                // Reset visual with original color
                 d3.select(this)
                     .transition()
                     .duration(200)
-                    .attr("d", self.arc);
+                    .attr("d", self.arc)
+                    .attr("fill", d.data.colorValue);
                 
                 // Hide tooltip
                 self.hideTooltip();
